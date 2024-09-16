@@ -1,0 +1,28 @@
+/**
+ * All the route of backend API
+ */
+const BASE_URL = process.env.REACT_APP_SERVER_BASE_URL + '/api/v1'
+
+const API = {
+  // course
+  courses: BASE_URL + '/courses',
+  coursedata: BASE_URL + '/coursesdata',
+  courseprogress: BASE_URL + '/progress/:userId/:courseId/:courseName',
+  savepartialProgress: BASE_URL + '/partial',
+  savecompleteProgress: BASE_URL + '/complete-course',
+  signup: BASE_URL + '/register',
+  otp: BASE_URL + '/verifyOTP',
+  login: BASE_URL + '/login',
+  forgotpassword: BASE_URL + '/forgotpassword',
+  resetpassword: BASE_URL + '/resetpassword',
+  user: BASE_URL + '/me',
+  logout: BASE_URL + '/logout',
+
+  // assignment
+  assignments: BASE_URL + '/assignments',
+  assignment: BASE_URL + '/assignment',
+  submission: BASE_URL + '/Submission',
+  submissionSolution: BASE_URL + '/Submission/solution',
+}
+
+export default API

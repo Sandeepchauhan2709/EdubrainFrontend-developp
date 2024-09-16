@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* default styles */
+* {
+  @apply font-Roboto tracking-[0px] scroll-smooth;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+* {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-Montserrat;
+}
+
+@layer utilities {
+  /* headings */
+  .large-heading {
+    @apply leading-[120%] font-bold text-[32px] md:text-[40px] 2xl:text-[64px];
+  }
+
+  .h1 {
+    @apply leading-[120%] font-medium text-[24px] md:text-[36px] 2xl:text-[48px];
+  }
+
+  .h2 {
+    @apply leading-[120%] font-semibold text-[20px] md:text-[28px] 2xl:text-[32px];
+  }
+
+  .h3 {
+    @apply leading-[120%] font-semibold text-[16px] md:text-[20px] 2xl:text-[24px];
+  }
+
+  .sub-heading {
+    @apply leading-[130%] font-bold text-[16px] md:text-[20px] 2xl:text-[24px];
+  }
+
+  /* body text */
+  .body-text-lg {
+    @apply leading-[150%] font-normal text-[12px] md:text-[16px] 2xl:text-[18px];
+  }
+  .body-text-md {
+    @apply leading-[150%] font-normal text-[14px]  2xl:text-[16px];
+  }
+  .body-text-sm {
+    @apply leading-[150%] font-normal text-[14px];
+  }
+
+  /* grid system */
+  .gutter-gap {
+    @apply gap-[16px] md:gap-[20px] 2xl:gap-[24px];
+  }
+  .margin-x {
+    @apply mx-[16px] md:mx-[40px] 2xl:mx-[80px];
+  }
+  .padding-x {
+    @apply px-[16px] md:px-[40px] 2xl:px-[80px];
+  }
+  .padding-default {
+    @apply p-[16px] md:p-[40px] 2xl:p-[80px];
+  }
+
+  /* icon */
+  .icon {
+    @apply w-[32px] h-[32px] 2xl:w-[40px] 2xl:h-[40px];
+  }
+}
