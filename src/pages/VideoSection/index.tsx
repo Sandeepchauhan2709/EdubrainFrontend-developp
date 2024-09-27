@@ -66,7 +66,10 @@ const VideoSection = (): JSX.Element => {
   const user: any = userData
   const userId: string = user?._id || ''
 
-  const findNextLecture = useCallback((): { url: string; lectureNumber: number } | null => {
+  const findNextLecture = useCallback((): {
+    url: string
+    lectureNumber: number
+  } | null => {
     let foundCurrent = false
     for (const course of courses) {
       for (const section of course.sections) {
@@ -75,7 +78,8 @@ const VideoSection = (): JSX.Element => {
             foundCurrent = true
           }
           if (foundCurrent) {
-            const { domain_url, bucket, folder_name, file_name } = lecture.lecture_cloud_link
+            const { domain_url, bucket, folder_name, file_name } =
+              lecture.lecture_cloud_link
             return {
               url: `${domain_url}${bucket}/${folder_name}/${file_name}.mp4`,
               lectureNumber: lecture.lecture_no,
@@ -87,7 +91,10 @@ const VideoSection = (): JSX.Element => {
     return null
   }, [courses, currentLectureNumber])
 
-  const findPrevLecture = useCallback((): { url: string; lectureNumber: number } | null => {
+  const findPrevLecture = useCallback((): {
+    url: string
+    lectureNumber: number
+  } | null => {
     let prevLecture = null
     for (const course of courses) {
       for (const section of course.sections) {
@@ -95,7 +102,8 @@ const VideoSection = (): JSX.Element => {
           if (lecture.lecture_no === currentLectureNumber) {
             return prevLecture
           }
-          const { domain_url, bucket, folder_name, file_name } = lecture.lecture_cloud_link
+          const { domain_url, bucket, folder_name, file_name } =
+            lecture.lecture_cloud_link
           prevLecture = {
             url: `${domain_url}${bucket}/${folder_name}/${file_name}.mp4`,
             lectureNumber: lecture.lecture_no,
@@ -106,15 +114,18 @@ const VideoSection = (): JSX.Element => {
     return null
   }, [courses, currentLectureNumber])
 
-  const handleVideoChange = useCallback((newUrl: string, lectureNumber: number): void => {
-    console.log('Changing video URL to:', newUrl)
-    setVideoUrl(newUrl)
-    setCurrentLectureNumber(lectureNumber)
-    if (videoPlayerRef.current) {
-      videoPlayerRef.current.loadVideo(newUrl)
-      videoPlayerRef.current.playVideo()
-    }
-  }, [])
+  const handleVideoChange = useCallback(
+    (newUrl: string, lectureNumber: number): void => {
+      console.log('Changing video URL to:', newUrl)
+      setVideoUrl(newUrl)
+      setCurrentLectureNumber(lectureNumber)
+      if (videoPlayerRef.current) {
+        videoPlayerRef.current.loadVideo(newUrl)
+        videoPlayerRef.current.playVideo()
+      }
+    },
+    []
+  )
 
   const nextVideo = useCallback((): void => {
     const nextLecture = findNextLecture()
@@ -130,28 +141,31 @@ const VideoSection = (): JSX.Element => {
     }
   }, [findPrevLecture, handleVideoChange])
 
-  const saveCourseProgress = useCallback(async (progress: number): Promise<void> => {
-    try {
-      const courseId = courses[0]?._id
-      const lectureNumber = currentLectureNumber
-      const response = await fetch(API.savepartialProgress, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userId, courseId, lectureNumber, progress }),
-      })
+  const saveCourseProgress = useCallback(
+    async (progress: number): Promise<void> => {
+      try {
+        const courseId = courses[0]?._id
+        const lectureNumber = currentLectureNumber
+        const response = await fetch(API.savepartialProgress, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ userId, courseId, lectureNumber, progress }),
+        })
 
-      if (!response.ok) {
-        throw new Error('Failed to save course progress')
+        if (!response.ok) {
+          throw new Error('Failed to save course progress')
+        }
+
+        const data = await response.json()
+        console.log('Progress saved successfully:', data)
+      } catch (error) {
+        console.error('Error saving progress:', error)
       }
-
-      const data = await response.json()
-      console.log('Progress saved successfully:', data)
-    } catch (error) {
-      console.error('Error saving progress:', error)
-    }
-  }, [courses, currentLectureNumber, userId])
+    },
+    [courses, currentLectureNumber, userId]
+  )
 
   const handleVideoEnd = useCallback(async (): Promise<void> => {
     console.log('Video ended, saving progress...')
@@ -253,10 +267,12 @@ const VideoSection = (): JSX.Element => {
                 Topic Name
               </h2>
               <div className="flex gap-5">
-                <button 
-                  onClick={prevVideo} 
+                <button
+                  onClick={prevVideo}
                   disabled={!hasPrevLecture}
-                  className={!hasPrevLecture ? 'opacity-50 cursor-not-allowed' : ''}
+                  className={
+                    !hasPrevLecture ? 'opacity-50 cursor-not-allowed' : ''
+                  }
                 >
                   <img
                     src={arrowUp}
@@ -264,10 +280,12 @@ const VideoSection = (): JSX.Element => {
                     className="-rotate-90"
                   />
                 </button>
-                <button 
+                <button
                   onClick={nextVideo}
                   disabled={!hasNextLecture}
-                  className={!hasNextLecture ? 'opacity-50 cursor-not-allowed' : ''}
+                  className={
+                    !hasNextLecture ? 'opacity-50 cursor-not-allowed' : ''
+                  }
                 >
                   <img src={arrowUp} alt="Next lecture" className="rotate-90" />
                 </button>
