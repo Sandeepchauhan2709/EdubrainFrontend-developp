@@ -147,10 +147,11 @@ const VideoSection = (): JSX.Element => {
       for (const section of course.sections) {
         for (const lecture of section.section_lectures) {
           if (foundCurrent) {
-            const { domain_url, bucket, folder_name, file_name } = lecture.lecture_cloud_link
+            const { domain_url, bucket, folder_name, file_name } =
+              lecture.lecture_cloud_link
             return {
               url: `${domain_url}${bucket}/${folder_name}/${file_name}.mp4`,
-              lectureNumber: lecture.lecture_no
+              lectureNumber: lecture.lecture_no,
             }
           }
           if (lecture.lecture_no === currentLectureNumber) {
@@ -163,13 +164,13 @@ const VideoSection = (): JSX.Element => {
   }
   const handleVideoEnd = async (): Promise<void> => {
     console.log('Video ended, saving progress...')
-    await saveCourseProgress(100);
-    setRefresh((prev) => !prev);
+    await saveCourseProgress(100)
+    setRefresh((prev) => !prev)
 
     const nextLecture = findNextLecture()
     if (nextLecture) {
       handleVideoChange(nextLecture.url, nextLecture.lectureNumber)
-    } 
+    }
   }
 
   const handleVideoEndWrapper = (): void => {
