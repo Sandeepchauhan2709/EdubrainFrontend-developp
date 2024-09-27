@@ -1,4 +1,3 @@
-
 import Navbar from '../../../components/navbar'
 import type { JSX } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -8,7 +7,13 @@ import UI from './UI'
 import Course from '../../../assets/data/CourseData/CourseData'
 
 type CoursePage = 'mernstack' | 'uiux' | 'python' | 'powerbi' | 'datascience'
-const pages: CoursePage[] = ['mernstack', 'uiux', 'python', 'powerbi', 'datascience']
+const pages: CoursePage[] = [
+  'mernstack',
+  'uiux',
+  'python',
+  'powerbi',
+  'datascience',
+]
 
 const HomePage = (): JSX.Element => {
   const { page } = useParams<{ page: CoursePage }>()
@@ -19,7 +24,7 @@ const HomePage = (): JSX.Element => {
       toast.error('Route not matched. Redirecting to home page...')
       setTimeout(() => {
         navigate('/')
-      }, 2000) 
+      }, 2000)
     }
   }, [page, navigate])
 
@@ -34,4 +39,3 @@ const HomePage = (): JSX.Element => {
 }
 
 export default HomePage
-

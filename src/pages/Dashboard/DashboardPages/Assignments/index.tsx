@@ -64,7 +64,7 @@ const AssignmentPage = (): JSX.Element => {
       </DashboardLayout>
     )
   }
-  console.log(COURSE_STATUS);
+  console.log(COURSE_STATUS)
   return (
     <DashboardLayout>
       <main className="h-full w-full flex flex-col gap-5 min-h-[calc(100vh-100px)]">
@@ -150,7 +150,6 @@ const AssignmentPage = (): JSX.Element => {
         </div>
       </main>
     </DashboardLayout>
-    
   )
 }
 export default AssignmentPage

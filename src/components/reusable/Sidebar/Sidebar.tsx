@@ -52,7 +52,6 @@ const Sidebar = (): JSX.Element => {
   //     toast.error('Failed to log out. Please try again.')
   //   }
   // }
-  
 
   return (
     <div className=" dark:bg-background bg-neutral-5 w-[290px] p-5 h-screen sticky top-0 hidden lg:block">

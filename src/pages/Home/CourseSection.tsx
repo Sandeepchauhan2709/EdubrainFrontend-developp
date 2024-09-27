@@ -92,17 +92,11 @@ const CourseSection = (): JSX.Element => {
               : data &&
                 data[activeCourse].description.substring(0, 130) + '...'} */}
 
-{
-  isReadMoreActive
-    ? data && data[activeCourse] && data[activeCourse].description
-    : data &&
-      data[activeCourse] &&
-      data[activeCourse].description
-      ? data[activeCourse].description.substring(0, 130) + '...'
-      : ''
-}
-
-   
+            {isReadMoreActive
+              ? data && data[activeCourse] && data[activeCourse].description
+              : data && data[activeCourse] && data[activeCourse].description
+                ? data[activeCourse].description.substring(0, 130) + '...'
+                : ''}
           </span>
           <button
             onClick={() => {
@@ -119,8 +113,9 @@ const CourseSection = (): JSX.Element => {
         {/* for larger devices */}
         <motion.p className="text-neutral-60 text-lg hidden xl:block break-all ">
           {/* {data && data[activeCourse].description.substring(0, 250) + '...'} */}
-          {data?.[activeCourse]?.description ? data[activeCourse].description.substring(0, 250) + '...' : ''}
-
+          {data?.[activeCourse]?.description
+            ? data[activeCourse].description.substring(0, 250) + '...'
+            : ''}
         </motion.p>
         <motion.div className="flex gap-2 sm:gap-3 items-end">
           <span className="text-neutral-10 text-2xl sm:text-3xl xl:text-3xl font-semibold">
@@ -222,7 +217,6 @@ const CourseSection = (): JSX.Element => {
             <ImageCarousel
               // images={data.map((course) => course.poster.url)}
               images={data?.map((course) => course.poster?.url) || []}
-
               activeIndex={activeCourse}
               setActiveIndex={setActiveCourse}
               autoSwipe={false}
@@ -233,7 +227,6 @@ const CourseSection = (): JSX.Element => {
             <ImageCarousel
               // images={data.map((course) => course.poster.url)}
               images={data?.map((course) => course.poster?.url) || []}
-
               activeIndex={activeCourse}
               setActiveIndex={setActiveCourse}
               autoSwipe={false}

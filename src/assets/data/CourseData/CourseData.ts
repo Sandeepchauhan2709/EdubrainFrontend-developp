@@ -11,7 +11,7 @@ import Biposter from '../../../assets/images/BiPoster.svg'
 import Pythonposter from '../../../assets/images/PythonPoster.svg'
 
 const Course = {
-  "mernstack": {
+  mernstack: {
     title: 'Craft Dynamic Web Experiences',
     subtitle: 'Learn MERN Stack Development',
     subtitle1: 'with Us',
@@ -89,7 +89,7 @@ const Course = {
       },
     ],
   },
-  'uiux': {
+  uiux: {
     title: 'Embark on a Creative Journey',
     subtitle: 'Master UI/UX Design with Our',
     subtitle1: 'Dynamic Courses',
@@ -167,7 +167,7 @@ const Course = {
       },
     ],
   },
-  'python': {
+  python: {
     title: 'Visualize Insights, Drive Decisions',
     subtitle: 'Enroll in Our Python Courses',
     subtitle1: 'with Us',
@@ -245,7 +245,7 @@ const Course = {
       },
     ],
   },
-  'powerbi': {
+  powerbi: {
     title: 'Visualize Insights, Drive Decisions',
     subtitle: 'Enroll in Our Power BI Courses',
     subtitle1: 'with Us',
@@ -323,7 +323,7 @@ const Course = {
       },
     ],
   },
-  'datascience': {
+  datascience: {
     title: 'Unleash the Power of Data',
     subtitle: 'Elevate Your Skills with Our ',
     subtitle1: 'Data Science Courses',

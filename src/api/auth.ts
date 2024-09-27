@@ -31,8 +31,8 @@ export const login = async (loginData: LoginFormData): Promise<unknown> => {
     console.log(data)
     return data.user ?? []
   } catch (error) {
-    toast.error('logged in failed');
-    console.log(error);
+    toast.error('logged in failed')
+    console.log(error)
     return []
   }
 }
