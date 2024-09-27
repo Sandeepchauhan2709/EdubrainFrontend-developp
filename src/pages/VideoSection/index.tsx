@@ -146,7 +146,7 @@ const VideoSection = (): JSX.Element => {
     for (const course of courses) {
       for (const section of course.sections) {
         for (const lecture of section.section_lectures) {
-          if (lecture.lecture_no === currentLectureNumber+1) {
+          if (lecture.lecture_no === currentLectureNumber + 1) {
             foundCurrent = true
           }
           if (foundCurrent) {
@@ -157,7 +157,6 @@ const VideoSection = (): JSX.Element => {
               lectureNumber: lecture.lecture_no,
             }
           }
-          
         }
       }
     }
@@ -172,10 +171,11 @@ const VideoSection = (): JSX.Element => {
           if (lecture.lecture_no === currentLectureNumber) {
             return prevLecture
           }
-          const { domain_url, bucket, folder_name, file_name } = lecture.lecture_cloud_link
+          const { domain_url, bucket, folder_name, file_name } =
+            lecture.lecture_cloud_link
           prevLecture = {
             url: `${domain_url}${bucket}/${folder_name}/${file_name}.mp4`,
-            lectureNumber: lecture.lecture_no
+            lectureNumber: lecture.lecture_no,
           }
         }
       }
@@ -194,15 +194,15 @@ const VideoSection = (): JSX.Element => {
   }
 
   const nextVideo = (): void => {
-    const nextLecture = findNextLecture();
-    if(nextLecture){
+    const nextLecture = findNextLecture()
+    if (nextLecture) {
       handleVideoChange(nextLecture.url, nextLecture.lectureNumber)
     }
   }
 
   const prevVideo = (): void => {
-    const prevLecture = findPrevLecture();
-    if(prevLecture){
+    const prevLecture = findPrevLecture()
+    if (prevLecture) {
       handleVideoChange(prevLecture.url, prevLecture.lectureNumber)
     }
   }
@@ -242,7 +242,11 @@ const VideoSection = (): JSX.Element => {
               </h2>
               <div className="flex gap-5">
                 <button onClick={prevVideo}>
-                  <img src={arrowUp} alt="Previous lecture" className="-rotate-90" />
+                  <img
+                    src={arrowUp}
+                    alt="Previous lecture"
+                    className="-rotate-90"
+                  />
                 </button>
                 <button onClick={nextVideo}>
                   <img src={arrowUp} alt="Next lecture" className="rotate-90" />
