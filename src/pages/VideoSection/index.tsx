@@ -102,7 +102,6 @@ const VideoSection = (): JSX.Element => {
         const totalno: number = progressData.totalLectures
         setTotalNumber(totalno)
         const progressCurrent: number = progressData.overallProgress
-        console.log(progressData.totalLectures, totalno, totalNumber)
         setCourseProgress(progressCurrent)
       } catch (error) {
         console.error('Error fetching course progress:', error)
@@ -142,10 +141,35 @@ const VideoSection = (): JSX.Element => {
     }
   }
 
+  const findNextLecture = (): { url: string; lectureNumber: number } | null => {
+    let foundCurrent = false
+    for (const course of courses) {
+      for (const section of course.sections) {
+        for (const lecture of section.section_lectures) {
+          if (foundCurrent) {
+            const { domain_url, bucket, folder_name, file_name } = lecture.lecture_cloud_link
+            return {
+              url: `${domain_url}${bucket}/${folder_name}/${file_name}.mp4`,
+              lectureNumber: lecture.lecture_no
+            }
+          }
+          if (lecture.lecture_no === currentLectureNumber) {
+            foundCurrent = true
+          }
+        }
+      }
+    }
+    return null // If there's no next lecture
+  }
   const handleVideoEnd = async (): Promise<void> => {
     console.log('Video ended, saving progress...')
-    await saveCourseProgress(100)
-    setRefresh((prev) => !prev)
+    await saveCourseProgress(100);
+    setRefresh((prev) => !prev);
+
+    const nextLecture = findNextLecture()
+    if (nextLecture) {
+      handleVideoChange(nextLecture.url, nextLecture.lectureNumber)
+    } 
   }
 
   const handleVideoEndWrapper = (): void => {
