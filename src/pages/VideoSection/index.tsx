@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import type { JSX } from 'react'
@@ -55,6 +55,9 @@ const VideoSection = (): JSX.Element => {
   const [currentLectureNumber, setCurrentLectureNumber] = useState<number>(0)
   const [refresh, setRefresh] = useState<boolean>(false)
   const [totalNumber, setTotalNumber] = useState<number>(0)
+  const [hasPrevLecture, setHasPrevLecture] = useState<boolean>(false)
+  const [hasNextLecture, setHasNextLecture] = useState<boolean>(false)
+
   const { data: userData } = useQuery({
     queryKey: ['user'],
     queryFn: handleGetUser,
@@ -62,6 +65,114 @@ const VideoSection = (): JSX.Element => {
 
   const user: any = userData
   const userId: string = user?._id || ''
+
+  const findNextLecture = useCallback((): { url: string; lectureNumber: number } | null => {
+    let foundCurrent = false
+    for (const course of courses) {
+      for (const section of course.sections) {
+        for (const lecture of section.section_lectures) {
+          if (lecture.lecture_no === currentLectureNumber + 1) {
+            foundCurrent = true
+          }
+          if (foundCurrent) {
+            const { domain_url, bucket, folder_name, file_name } = lecture.lecture_cloud_link
+            return {
+              url: `${domain_url}${bucket}/${folder_name}/${file_name}.mp4`,
+              lectureNumber: lecture.lecture_no,
+            }
+          }
+        }
+      }
+    }
+    return null
+  }, [courses, currentLectureNumber])
+
+  const findPrevLecture = useCallback((): { url: string; lectureNumber: number } | null => {
+    let prevLecture = null
+    for (const course of courses) {
+      for (const section of course.sections) {
+        for (const lecture of section.section_lectures) {
+          if (lecture.lecture_no === currentLectureNumber) {
+            return prevLecture
+          }
+          const { domain_url, bucket, folder_name, file_name } = lecture.lecture_cloud_link
+          prevLecture = {
+            url: `${domain_url}${bucket}/${folder_name}/${file_name}.mp4`,
+            lectureNumber: lecture.lecture_no,
+          }
+        }
+      }
+    }
+    return null
+  }, [courses, currentLectureNumber])
+
+  const handleVideoChange = useCallback((newUrl: string, lectureNumber: number): void => {
+    console.log('Changing video URL to:', newUrl)
+    setVideoUrl(newUrl)
+    setCurrentLectureNumber(lectureNumber)
+    if (videoPlayerRef.current) {
+      videoPlayerRef.current.loadVideo(newUrl)
+      videoPlayerRef.current.playVideo()
+    }
+  }, [])
+
+  const nextVideo = useCallback((): void => {
+    const nextLecture = findNextLecture()
+    if (nextLecture) {
+      handleVideoChange(nextLecture.url, nextLecture.lectureNumber)
+    }
+  }, [findNextLecture, handleVideoChange])
+
+  const prevVideo = useCallback((): void => {
+    const prevLecture = findPrevLecture()
+    if (prevLecture) {
+      handleVideoChange(prevLecture.url, prevLecture.lectureNumber)
+    }
+  }, [findPrevLecture, handleVideoChange])
+
+  const saveCourseProgress = useCallback(async (progress: number): Promise<void> => {
+    try {
+      const courseId = courses[0]?._id
+      const lectureNumber = currentLectureNumber
+      const response = await fetch(API.savepartialProgress, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId, courseId, lectureNumber, progress }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to save course progress')
+      }
+
+      const data = await response.json()
+      console.log('Progress saved successfully:', data)
+    } catch (error) {
+      console.error('Error saving progress:', error)
+    }
+  }, [courses, currentLectureNumber, userId])
+
+  const handleVideoEnd = useCallback(async (): Promise<void> => {
+    console.log('Video ended, saving progress...')
+    await saveCourseProgress(100)
+    setRefresh((prev) => !prev)
+
+    const nextLecture = findNextLecture()
+    if (nextLecture) {
+      handleVideoChange(nextLecture.url, nextLecture.lectureNumber)
+    }
+  }, [saveCourseProgress, findNextLecture, handleVideoChange])
+
+  const handleVideoEndWrapper = useCallback((): void => {
+    handleVideoEnd().catch((error) => {
+      console.error('Error handling video end:', error)
+    })
+  }, [handleVideoEnd])
+
+  const handleProgressUpdate = useCallback((progress: number): void => {
+    setVideoProgress(progress)
+  }, [])
 
   useEffect(() => {
     const fetchCourses = async (): Promise<void> => {
@@ -113,118 +224,19 @@ const VideoSection = (): JSX.Element => {
     }
   }, [courses, refresh, userId])
 
+  useEffect(() => {
+    const updateNavigationState = (): void => {
+      const prevLecture = findPrevLecture()
+      const nextLecture = findNextLecture()
+      setHasPrevLecture(!!prevLecture)
+      setHasNextLecture(!!nextLecture)
+    }
+
+    updateNavigationState()
+  }, [currentLectureNumber, courses, findPrevLecture, findNextLecture])
+
   if (loading) {
     return <div>Loading courses...</div>
-  }
-
-  const saveCourseProgress = async (progress: number): Promise<void> => {
-    try {
-      const courseId = courses[0]?._id
-      const lectureNumber = currentLectureNumber
-      // console.log(JSON.stringify({ userId, courseId, lectureNumber, progress }))
-      const response = await fetch(API.savepartialProgress, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userId, courseId, lectureNumber, progress }),
-      })
-
-      if (!response.ok) {
-        throw new Error('Failed to save course progress')
-      }
-
-      const data = await response.json()
-      console.log('Progress saved successfully:', data)
-    } catch (error) {
-      console.error('Error saving progress:', error)
-    }
-  }
-
-  const findNextLecture = (): { url: string; lectureNumber: number } | null => {
-    let foundCurrent = false
-    for (const course of courses) {
-      for (const section of course.sections) {
-        for (const lecture of section.section_lectures) {
-          if (lecture.lecture_no === currentLectureNumber + 1) {
-            foundCurrent = true
-          }
-          if (foundCurrent) {
-            const { domain_url, bucket, folder_name, file_name } =
-              lecture.lecture_cloud_link
-            return {
-              url: `${domain_url}${bucket}/${folder_name}/${file_name}.mp4`,
-              lectureNumber: lecture.lecture_no,
-            }
-          }
-        }
-      }
-    }
-    return null // If there's no next lecture
-  }
-
-  const findPrevLecture = (): { url: string; lectureNumber: number } | null => {
-    let prevLecture = null
-    for (const course of courses) {
-      for (const section of course.sections) {
-        for (const lecture of section.section_lectures) {
-          if (lecture.lecture_no === currentLectureNumber) {
-            return prevLecture
-          }
-          const { domain_url, bucket, folder_name, file_name } =
-            lecture.lecture_cloud_link
-          prevLecture = {
-            url: `${domain_url}${bucket}/${folder_name}/${file_name}.mp4`,
-            lectureNumber: lecture.lecture_no,
-          }
-        }
-      }
-    }
-    return null // If there's no previous lecture
-  }
-  const handleVideoEnd = async (): Promise<void> => {
-    console.log('Video ended, saving progress...')
-    await saveCourseProgress(100)
-    setRefresh((prev) => !prev)
-
-    const nextLecture = findNextLecture()
-    if (nextLecture) {
-      handleVideoChange(nextLecture.url, nextLecture.lectureNumber)
-    }
-  }
-
-  const nextVideo = (): void => {
-    const nextLecture = findNextLecture()
-    if (nextLecture) {
-      handleVideoChange(nextLecture.url, nextLecture.lectureNumber)
-    }
-  }
-
-  const prevVideo = (): void => {
-    const prevLecture = findPrevLecture()
-    if (prevLecture) {
-      handleVideoChange(prevLecture.url, prevLecture.lectureNumber)
-    }
-  }
-
-  const handleVideoEndWrapper = (): void => {
-    handleVideoEnd().catch((error) => {
-      console.error('Error handling video end:', error)
-    })
-  }
-
-  const handleProgressUpdate = (progress: number): void => {
-    setVideoProgress(progress)
-  }
-
-  const handleVideoChange = (newUrl: string, lectureNumber: number): void => {
-    console.log('Changing video URL to:', newUrl)
-    setVideoUrl(newUrl)
-    setCurrentLectureNumber(lectureNumber)
-    if (videoPlayerRef.current) {
-      videoPlayerRef.current.loadVideo(newUrl)
-      videoPlayerRef.current.playVideo()
-    }
   }
 
   return (
@@ -241,14 +253,22 @@ const VideoSection = (): JSX.Element => {
                 Topic Name
               </h2>
               <div className="flex gap-5">
-                <button onClick={prevVideo}>
+                <button 
+                  onClick={prevVideo} 
+                  disabled={!hasPrevLecture}
+                  className={!hasPrevLecture ? 'opacity-50 cursor-not-allowed' : ''}
+                >
                   <img
                     src={arrowUp}
                     alt="Previous lecture"
                     className="-rotate-90"
                   />
                 </button>
-                <button onClick={nextVideo}>
+                <button 
+                  onClick={nextVideo}
+                  disabled={!hasNextLecture}
+                  className={!hasNextLecture ? 'opacity-50 cursor-not-allowed' : ''}
+                >
                   <img src={arrowUp} alt="Next lecture" className="rotate-90" />
                 </button>
               </div>
@@ -277,7 +297,6 @@ const VideoSection = (): JSX.Element => {
               {VIDEO_DATA.resources.map((resource, index) => (
                 <Link
                   to={resource.link}
-                  // key={index}
                   key={`resource-${index}`}
                   target="_blank"
                   className="w-full bg-foreground-light/10 dark:bg-neutral-95 rounded-xl p-3 flex gap-4 text-foreground-light dark:text-neutral-10"
@@ -299,7 +318,6 @@ const VideoSection = (): JSX.Element => {
             <div className="flex flex-col gap-3">
               {VIDEO_DATA.assignments.map((assignment, index) => (
                 <div
-                  // key={index}
                   key={`assignment-${index}`}
                   className="w-full bg-foreground-light/10 dark:bg-neutral-95 h-[54px] rounded-xl px-3 py-2 flex gap-4 justify-between text-foreground-light dark:text-neutral-10"
                 >
@@ -345,7 +363,6 @@ const VideoSection = (): JSX.Element => {
               }}
             >
               <span className="h3 text-foreground-light dark:text-neutral-10 ">
-                {/* {VIDEO_DATA.overallProgress}% */}
                 {courseProgress}%
               </span>
               <div className="h-full w-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -rotate-90">
