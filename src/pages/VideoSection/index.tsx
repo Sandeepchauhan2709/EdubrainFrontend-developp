@@ -1,168 +1,172 @@
+import React, { useState, useRef, useEffect } from 'react'
+import { Link, useParams } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
 import type { JSX } from 'react'
-import arrowUp from '../../assets/icons/arrow-up.svg'
 
+import arrowUp from '../../assets/icons/arrow-up.svg'
 import linkIcon from '../../assets/icons/link-2.svg'
 import docIcon from '../../assets/icons/document-text.svg'
 import PrimaryButton from '../../components/buttons/PrimaryButton'
 import VIDEO_DATA from '../../assets/mockData/video'
-
-import { Link, useParams } from 'react-router-dom'
 import CoursePart from './CoursePart'
 import FAQSection from './FAQSection'
 import DashboardHeader from '../Dashboard/DashboardHeader/DashboardHeader'
 import VideoPlayer from './VideoPlayer'
-import type { VideoPlayerHandle } from './VideoPlayer';
-
-import { useState,useRef,useEffect } from 'react'
-
+import type { VideoPlayerHandle } from './VideoPlayer'
 import API from '../../api'
+import { handleGetUser } from '../../api/user'
 
+interface Lecture {
+  _id: string
+  lecture_no: number
+  lecture_name: string
+  lecture_cloud_link: {
+    domain_url: string
+    bucket: string
+    folder_name: string
+    file_name: string
+  }
+  lecture_file_path: string
+}
 
 interface Section {
-  title: string;
-  section_name: string;
-  domain_url: string;
-  section_lectures: Array<{
-    name: string;
-    time: string;
-    isActive: boolean;
-    lecture_name: string;
-    videoUrl: string;
-    file_name: string;
-    domain_url: string;
-  }>;
+  _id: string
+  section_no: number
+  section_name: string
+  section_lectures: Lecture[]
 }
 
 interface Course {
-  id: number;
-  title: string;
-  description: string;
-  videoUrl: string;
-  domain_url: string;
-  progress?: number;
-  sections?: Section[]; 
-  course_name?: string;
-  lecture_name: string;
-  section_name: string;
+  _id: string
+  course_name: string
+  sections: Section[]
 }
 
-interface CourseProgress {
-  progress: number;
-};
-
-// interface VideoPlayerProps {
-//   initialUrl: string;
-//   onEnded?: () => void; 
-// }
-
-
 const VideoSection = (): JSX.Element => {
-  const {slug} = useParams();
-  const [courses, setCourses] = useState<Course[]>([]);
-  // const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const videoPlayerRef = useRef<VideoPlayerHandle>(null);
-  const [videoUrl, setVideoUrl] = useState('https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/MPaEbz-/videoblocks-3d-motion-graphics-background-with-digitally-animated-financial-line-graphs-running-through-virtual-space-with-holographic-rates-and-stock-market-board_rrmqee0uen__a7e7f8b956edb39721046e83c001f47a__P360.mp4');
-  const [courseProgress, setCourseProgress] = useState<number>(0);
+  const { slug } = useParams<{ slug: string }>()
+  const [courses, setCourses] = useState<Course[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+  const videoPlayerRef = useRef<VideoPlayerHandle>(null)
+  const [videoUrl, setVideoUrl] = useState(
+    'https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/MPaEbz-/videoblocks-3d-motion-graphics-background-with-digitally-animated-financial-line-graphs-running-through-virtual-space-with-holographic-rates-and-stock-market-board_rrmqee0uen__a7e7f8b956edb39721046e83c001f47a__P360.mp4'
+  )
+  const [courseProgress, setCourseProgress] = useState<number>(0)
+  const [videoProgress, setVideoProgress] = useState<number>(0)
+  const [currentLectureNumber, setCurrentLectureNumber] = useState<number>(0)
+  const [refresh, setRefresh] = useState<boolean>(false)
+  const [totalNumber, setTotalNumber] = useState<number>(0)
+  const { data: userData } = useQuery({
+    queryKey: ['user'],
+    queryFn: handleGetUser,
+  })
 
-    useEffect(() => {
-      const fetchCourses = async (): Promise<void> => {
-        try {
-          // const response = await fetch(`${API.coursedata}/${slug}`);
-          const response = await fetch(API.coursedata);
-          if (!response.ok) {
-            throw new Error('Failed to fetch courses');
-          }
+  const user: any = userData
+  const userId: string = user?._id || ''
 
-          const data = await response.json();
-          
-          console.log(data); 
-            if (data && typeof data === 'object' && !Array.isArray(data)) {
-            setCourses([data]); // Wrap the single object in an array
-          } else if (Array.isArray(data)) {
-            setCourses(data); // If data is already an array, set it directly
-          } else {
-            setCourses([]); // If data is neither object nor array, set an empty array
-            console.error('Unexpected data format:', data);
-          }
-
-        // Fetch the course progress
-        const progressResponse = await fetch(`${API.courseprogress}/${slug}`);
-        // const progressResponse = await fetch(API.courseprogress);
-        if (!progressResponse.ok) {
-          throw new Error('Failed to fetch course progress');
-        }
-        const progressData: CourseProgress = await progressResponse.json();
-
-        if(typeof progressData.progress === 'number') {
-          setCourseProgress(progressData.progress);
-        }
-        else {
-          console.log('Invalid progress data:', progressData)
+  useEffect(() => {
+    const fetchCourses = async (): Promise<void> => {
+      try {
+        const response = await fetch(API.coursedata)
+        if (!response.ok) {
+          throw new Error('Failed to fetch courses')
         }
 
+        const data = await response.json()
+        setCourses(Array.isArray(data) ? data : [data])
       } catch (error) {
-        console.error('Error fetching  progress:', error);
+        console.error('Error fetching courses:', error)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
-      fetchCourses();
-    }, [slug]);
-    
+    }
+    fetchCourses()
+  }, [slug])
 
-    if (loading) {
-      return <div>Loading courses...</div>;
+  useEffect(() => {
+    const fetchCourseProgress = async (): Promise<void> => {
+      if (!courses || courses.length === 0) {
+        console.log('Courses not yet available')
+        return
+      }
+
+      try {
+        const courseId = courses[0]?._id
+        const response = await fetch(
+          `${API.courseprogress}${userId}/${courseId}`
+        )
+        if (!response.ok) {
+          throw new Error('Failed to fetch course progress')
+        }
+
+        const progressData = await response.json()
+        const totalno: number = progressData.totalLectures
+        setTotalNumber(totalno)
+        const progressCurrent: number = progressData.overallProgress
+        console.log(progressData.totalLectures, totalno, totalNumber)
+        setCourseProgress(progressCurrent)
+      } catch (error) {
+        console.error('Error fetching course progress:', error)
+      }
+    }
+
+    if (courses.length > 0) {
+      fetchCourseProgress()
+    }
+  }, [courses, refresh, userId])
+
+  if (loading) {
+    return <div>Loading courses...</div>
   }
-
-  // if (error) {
-  //     return <div>Error: {error}</div>;
-  // }
 
   const saveCourseProgress = async (progress: number): Promise<void> => {
-  try {
-    const response = await fetch(`${API.savepartialProgress}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ progress }), // Send the progress in the body
-    });
+    try {
+      const courseId = courses[0]?._id
+      const lectureNumber = currentLectureNumber
+      // console.log(JSON.stringify({ userId, courseId, lectureNumber, progress }))
+      const response = await fetch(API.savepartialProgress, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId, courseId, lectureNumber, progress }),
+      })
 
-    if (!response.ok) {
-      throw new Error('Failed to save course progress');
+      if (!response.ok) {
+        throw new Error('Failed to save course progress')
+      }
+
+      const data = await response.json()
+      console.log('Progress saved successfully:', data)
+    } catch (error) {
+      console.error('Error saving progress:', error)
     }
-
-    const data = await response.json();
-    console.log('Progress saved successfully:', data);
-  } catch (error) {
-    console.error('Error saving progress:', error);
   }
-};
 
-const calculateProgress = (): number => {
-  return Math.floor(Math.random() * 100); 
-};
+  const handleVideoEnd = async (): Promise<void> => {
+    console.log('Video ended, saving progress...')
+    await saveCourseProgress(100)
+    setRefresh((prev) => !prev)
+  }
 
-const handleVideoEnd = (): void => {
-  console.log('Video ended, saving progress...');
-  const newProgress = calculateProgress(); // You can define how to calculate progress
-  setCourseProgress(newProgress);
-  saveCourseProgress(newProgress);
-  
-};
+  const handleVideoEndWrapper = (): void => {
+    handleVideoEnd().catch((error) => {
+      console.error('Error handling video end:', error)
+    })
+  }
 
+  const handleProgressUpdate = (progress: number): void => {
+    setVideoProgress(progress)
+  }
 
-
-  const handleVideoChange = (newUrl:string): void => {
-    console.log('Changing video URL to:', newUrl); 
-    setVideoUrl(newUrl);
+  const handleVideoChange = (newUrl: string, lectureNumber: number): void => {
+    console.log('Changing video URL to:', newUrl)
+    setVideoUrl(newUrl)
+    setCurrentLectureNumber(lectureNumber)
     if (videoPlayerRef.current) {
-      videoPlayerRef.current.loadVideo(newUrl);
-      videoPlayerRef.current.playVideo();
+      videoPlayerRef.current.loadVideo(newUrl)
+      videoPlayerRef.current.playVideo()
     }
-  };
-
+  }
 
   return (
     <div className="dark:bg-background bg-background-light padding-x py-12 w-full h-full">
@@ -171,13 +175,11 @@ const handleVideoEnd = (): void => {
         <div className="flex-grow flex gap-6 flex-col">
           <div className="flex flex-col gap-3">
             <span className="body-text-md text-foreground-light dark:text-neutral-10">
-              Lesson 12 of 118
+              Lesson {currentLectureNumber} of {totalNumber}
             </span>
             <div className="flex justify-between items-center">
-              <h2 className="h2 text-foreground-light dark:text-neutral-10" 
-             >
+              <h2 className="h2 text-foreground-light dark:text-neutral-10">
                 Topic Name
-              
               </h2>
               <div className="flex gap-5">
                 <button>
@@ -189,8 +191,13 @@ const handleVideoEnd = (): void => {
               </div>
             </div>
           </div>
-            <VideoPlayer ref={videoPlayerRef} initialUrl={videoUrl}  onEnded={handleVideoEnd}
-            />
+          <VideoPlayer
+            ref={videoPlayerRef}
+            initialUrl={videoUrl}
+            onEnded={handleVideoEndWrapper}
+            onProgressUpdate={handleProgressUpdate}
+          />
+
           <div className="flex flex-col gap-4 mt-2">
             <h4 className="sub-heading text-foreground-light dark:text-neutral-10">
               Summary
@@ -204,7 +211,6 @@ const handleVideoEnd = (): void => {
               Resources
             </h4>
             <div className="flex flex-col gap-3">
-            
               {VIDEO_DATA.resources.map((resource, index) => (
                 <Link
                   to={resource.link}
@@ -305,10 +311,14 @@ const handleVideoEnd = (): void => {
           </div>
           <div className="flex flex-col gap-5 w-full">
             {courses.map((course, index) => (
-              <CoursePart handleVideoChange={handleVideoChange} key={course.id} i={index} {...course}   progress={(course.progress || 0).toString()}
-              course_name={course.course_name || 'Default Course Name'}
-             
-              sections={course.sections ? course.sections : []} 
+              <CoursePart
+                key={course._id}
+                handleVideoChange={handleVideoChange}
+                i={index}
+                progress={videoProgress.toString()}
+                course_name={course.course_name}
+                sections={course.sections}
+                currentLectureNumber={currentLectureNumber}
               />
             ))}
           </div>

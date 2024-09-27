@@ -7,9 +7,10 @@ const API = {
   // course
   courses: BASE_URL + '/courses',
   coursedata: BASE_URL + '/coursesdata',
-  courseprogress: BASE_URL + '/progress/:userId/:courseId/:courseName',
-  savepartialProgress: BASE_URL + '/partial',
-  savecompleteProgress: BASE_URL + '/complete-course',
+  courseprogress: BASE_URL + '/progress/',
+  // //:userId/:courseId/:courseName
+  savepartialProgress: BASE_URL + '/partial/',
+  // savecompleteProgress: BASE_URL + '/complete-course',
   signup: BASE_URL + '/register',
   otp: BASE_URL + '/verifyOTP',
   login: BASE_URL + '/login',
