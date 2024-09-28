@@ -1,13 +1,7 @@
-import React, {
-  useRef,
-  useImperativeHandle,
-  forwardRef,
-  useState,
-  useEffect,
-} from 'react'
+import React, { useRef, useImperativeHandle, forwardRef, useState, useEffect } from 'react'
 
 export interface VideoPlayerHandle {
-  loadVideo: (url: string) => void
+  loadVideo: (url: string, autoplay: boolean) => void
   playVideo: () => void
 }
 
@@ -23,15 +17,22 @@ const VideoPlayer = forwardRef<VideoPlayerHandle, VideoPlayerProps>(
     const [, setProgress] = useState(0)
 
     useImperativeHandle(ref, () => ({
-      loadVideo(url: string) {
+      loadVideo(url: string, autoplay: boolean) {
         if (videoRef.current) {
           videoRef.current.src = url
           videoRef.current.load()
+          if (autoplay) {
+            videoRef.current.play().catch(error => {
+              console.warn('AutoPlay failed:', error)
+            })
+          }
         }
       },
       playVideo() {
         if (videoRef.current) {
-          videoRef.current.play()
+          videoRef.current.play().catch(error => {
+            console.warn('Play failed:', error)
+          })
         }
       },
     }))

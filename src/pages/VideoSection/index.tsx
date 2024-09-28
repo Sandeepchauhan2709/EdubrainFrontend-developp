@@ -66,6 +66,8 @@ const VideoSection = (): JSX.Element => {
   const user: any = userData
   const userId: string = user?._id || ''
 
+  
+
   const findNextLecture = useCallback((): {
     url: string
     lectureNumber: number
@@ -115,13 +117,12 @@ const VideoSection = (): JSX.Element => {
   }, [courses, currentLectureNumber])
 
   const handleVideoChange = useCallback(
-    (newUrl: string, lectureNumber: number): void => {
+    (newUrl: string, lectureNumber: number, autoplay: boolean = true): void => {
       console.log('Changing video URL to:', newUrl)
       setVideoUrl(newUrl)
       setCurrentLectureNumber(lectureNumber)
       if (videoPlayerRef.current) {
-        videoPlayerRef.current.loadVideo(newUrl)
-        videoPlayerRef.current.playVideo()
+        videoPlayerRef.current.loadVideo(newUrl, autoplay)
       }
     },
     []
@@ -248,6 +249,85 @@ const VideoSection = (): JSX.Element => {
 
     updateNavigationState()
   }, [currentLectureNumber, courses, findPrevLecture, findNextLecture])
+
+  const findLectureByNumber = useCallback((lectureNumber: number): {
+    url: string
+    lectureNumber: number
+  } | null => {
+    for (const course of courses) {
+      for (const section of course.sections) {
+        for (const lecture of section.section_lectures) {
+          if (lecture.lecture_no === lectureNumber) {
+            const { domain_url, bucket, folder_name, file_name } = lecture.lecture_cloud_link
+            return {
+              url: `${domain_url}${bucket}/${folder_name}/${file_name}.mp4`,
+              lectureNumber: lecture.lecture_no,
+            }
+          }
+        }
+      }
+    }
+    return null
+  }, [courses])
+
+  const updateLastLecture = useCallback(async (lectureNumber: number): Promise<void> => {
+    try {
+      const courseId = courses[0]?._id
+      const response = await fetch(`${API.lastLecture}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId, courseId, lastLecture: lectureNumber }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to update last lecture')
+      }
+
+      const data = await response.json()
+      console.log('Last lecture updated successfully:', data)
+    } catch (error) {
+      console.error('Error updating last lecture:', error)
+    }
+  }, [courses, userId])
+
+  useEffect(() => {
+    const fetchLastLecture = async (): Promise<void> => {
+      if (!courses || courses.length === 0) {
+        console.log('Courses not yet available')
+        return
+      }
+
+      try {
+        const courseId = courses[0]?._id
+        const response = await fetch(`${API.courseprogress}${userId}/${courseId}`)
+        if (!response.ok) {
+          throw new Error('Failed to fetch course progress')
+        }
+
+        const progressData = await response.json()
+        const lastLecture : number= progressData.lastLectureAccessed
+
+        if (lastLecture > 0) {
+          const lecture = findLectureByNumber(lastLecture)
+          if (lecture) {
+            handleVideoChange(lecture.url, lecture.lectureNumber, false) // Disable autoplay for initial load
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching last lecture:', error)
+      }
+    }
+
+    fetchLastLecture()
+  }, [courses, userId, findLectureByNumber, handleVideoChange])
+
+  useEffect(() => {
+    if (currentLectureNumber > 0) {
+      updateLastLecture(currentLectureNumber)
+    }
+  }, [currentLectureNumber, updateLastLecture])
 
   if (loading) {
     return <div>Loading courses...</div>

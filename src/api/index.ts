@@ -10,6 +10,7 @@ const API = {
   courseprogress: BASE_URL + '/progress/',
   // //:userId/:courseId/:courseName
   savepartialProgress: BASE_URL + '/partial/',
+  lastLecture: BASE_URL + '/progress/lastLecture/',
   // savecompleteProgress: BASE_URL + '/complete-course',
   signup: BASE_URL + '/register',
   otp: BASE_URL + '/verifyOTP',
