@@ -57,7 +57,7 @@ const VideoSection = (): JSX.Element => {
   const [totalNumber, setTotalNumber] = useState<number>(0)
   const [hasPrevLecture, setHasPrevLecture] = useState<boolean>(false)
   const [hasNextLecture, setHasNextLecture] = useState<boolean>(false)
-
+  const [lectureName , setLectureName] = useState<string>('')
   const { data: userData } = useQuery({
     queryKey: ['user'],
     queryFn: handleGetUser,
@@ -69,6 +69,7 @@ const VideoSection = (): JSX.Element => {
   const findNextLecture = useCallback((): {
     url: string
     lectureNumber: number
+    lectureName: string
   } | null => {
     let foundCurrent = false
     for (const course of courses) {
@@ -83,6 +84,7 @@ const VideoSection = (): JSX.Element => {
             return {
               url: `${domain_url}${bucket}/${folder_name}/${file_name}.mp4`,
               lectureNumber: lecture.lecture_no,
+              lectureName: lecture.lecture_name
             }
           }
         }
@@ -94,6 +96,7 @@ const VideoSection = (): JSX.Element => {
   const findPrevLecture = useCallback((): {
     url: string
     lectureNumber: number
+    lectureName: string
   } | null => {
     let prevLecture = null
     for (const course of courses) {
@@ -107,6 +110,7 @@ const VideoSection = (): JSX.Element => {
           prevLecture = {
             url: `${domain_url}${bucket}/${folder_name}/${file_name}.mp4`,
             lectureNumber: lecture.lecture_no,
+            lectureName: lecture.lecture_name
           }
         }
       }
@@ -115,10 +119,11 @@ const VideoSection = (): JSX.Element => {
   }, [courses, currentLectureNumber])
 
   const handleVideoChange = useCallback(
-    (newUrl: string, lectureNumber: number, autoplay: boolean = true): void => {
+    (newUrl: string, lectureNumber: number, newLectureName: string, autoplay: boolean = true): void => {
       console.log('Changing video URL to:', newUrl)
       setVideoUrl(newUrl)
       setCurrentLectureNumber(lectureNumber)
+      setLectureName(newLectureName)
       if (videoPlayerRef.current) {
         videoPlayerRef.current.loadVideo(newUrl, autoplay)
       }
@@ -129,14 +134,14 @@ const VideoSection = (): JSX.Element => {
   const nextVideo = useCallback((): void => {
     const nextLecture = findNextLecture()
     if (nextLecture) {
-      handleVideoChange(nextLecture.url, nextLecture.lectureNumber)
+      handleVideoChange(nextLecture.url, nextLecture.lectureNumber, nextLecture.lectureName)
     }
   }, [findNextLecture, handleVideoChange])
 
   const prevVideo = useCallback((): void => {
     const prevLecture = findPrevLecture()
     if (prevLecture) {
-      handleVideoChange(prevLecture.url, prevLecture.lectureNumber)
+      handleVideoChange(prevLecture.url, prevLecture.lectureNumber, prevLecture.lectureName)
     }
   }, [findPrevLecture, handleVideoChange])
 
@@ -173,7 +178,7 @@ const VideoSection = (): JSX.Element => {
 
     const nextLecture = findNextLecture()
     if (nextLecture) {
-      handleVideoChange(nextLecture.url, nextLecture.lectureNumber)
+      handleVideoChange(nextLecture.url, nextLecture.lectureNumber, nextLecture.lectureName)
     }
   }, [saveCourseProgress, findNextLecture, handleVideoChange])
 
@@ -254,6 +259,7 @@ const VideoSection = (): JSX.Element => {
     ): {
       url: string
       lectureNumber: number
+      lectureName : string
     } | null => {
       for (const course of courses) {
         for (const section of course.sections) {
@@ -264,6 +270,7 @@ const VideoSection = (): JSX.Element => {
               return {
                 url: `${domain_url}${bucket}/${folder_name}/${file_name}.mp4`,
                 lectureNumber: lecture.lecture_no,
+                lectureName: lecture.lecture_name
               }
             }
           }
@@ -325,7 +332,7 @@ const VideoSection = (): JSX.Element => {
         if (lastLecture > 0) {
           const lecture = findLectureByNumber(lastLecture)
           if (lecture) {
-            handleVideoChange(lecture.url, lecture.lectureNumber, false) // Disable autoplay for initial load
+            handleVideoChange(lecture.url, lecture.lectureNumber, lecture.lectureName,false) // Disable autoplay for initial load
           }
         }
       } catch (error) {
@@ -357,7 +364,7 @@ const VideoSection = (): JSX.Element => {
             </span>
             <div className="flex justify-between items-center">
               <h2 className="h2 text-foreground-light dark:text-neutral-10">
-                Topic Name
+                {lectureName}
               </h2>
               <div className="flex gap-5">
                 <button
