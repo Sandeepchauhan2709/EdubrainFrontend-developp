@@ -25,7 +25,11 @@ interface Section {
 }
 
 interface CoursePartProps {
-  handleVideoChange: (url: string, lectureNumber: number, lectureName: string) => void
+  handleVideoChange: (
+    url: string,
+    lectureNumber: number,
+    lectureName: string
+  ) => void
   i: number
   progress: string
   course_name: string
@@ -124,7 +128,9 @@ const CoursePart: React.FC<CoursePartProps> = ({
                           : 'border dark:border-neutral-90 border-foreground-light/20'
                       }`}
                     >
-                      <span>{lecture.lecture_no}. {lecture.lecture_name}</span>
+                      <span>
+                        {lecture.lecture_no}. {lecture.lecture_name}
+                      </span>
                     </button>
                   ))}
                 </div>
