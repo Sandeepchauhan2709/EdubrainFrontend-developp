@@ -17,69 +17,69 @@
 
 // const EnrolledCourse = (): JSX.Element => {
 //   // Course Details
-  // const courseDetails: CourseDetails[] = [
-  //   {
-  //     img: 'https://i.ibb.co/dcQynTD/ui-ux-design.png',
-  //     courseName: 'UI/UX design',
-  //     enrollDate: 'Enrolled on 12 may, 2023',
-  //     time: 'Last Read: Introduction of UI/UX',
-  //     module: '154',
-  //     completedModule: '12',
-  //   },
+// const courseDetails: CourseDetails[] = [
+//   {
+//     img: 'https://i.ibb.co/dcQynTD/ui-ux-design.png',
+//     courseName: 'UI/UX design',
+//     enrollDate: 'Enrolled on 12 may, 2023',
+//     time: 'Last Read: Introduction of UI/UX',
+//     module: '154',
+//     completedModule: '12',
+//   },
 
-  //   {
-  //     img: 'https://i.ibb.co/VBJZcwK/data-science.png',
-  //     courseName: 'Data Science',
-  //     enrollDate: 'Enrolled on 12 may, 2023',
-  //     time: 'Last Read: Learn Data Science',
-  //     module: '154',
-  //     completedModule: '10',
-  //   },
+//   {
+//     img: 'https://i.ibb.co/VBJZcwK/data-science.png',
+//     courseName: 'Data Science',
+//     enrollDate: 'Enrolled on 12 may, 2023',
+//     time: 'Last Read: Learn Data Science',
+//     module: '154',
+//     completedModule: '10',
+//   },
 
-  //   {
-  //     img: 'https://i.ibb.co/2qYdCVc/Mern-stark.png',
-  //     courseName: 'Mern Stack',
-  //     enrollDate: 'Enrolled on 23 June, 2023',
-  //     time: 'Last Read: Learn Mern Stack',
-  //     module: '154',
-  //     completedModule: '50',
-  //   },
-  //   {
-  //     img: 'https://i.ibb.co/dcQynTD/ui-ux-design.png',
-  //     courseName: 'UI/UX design',
-  //     enrollDate: 'Enrolled on 12 may, 2023',
-  //     time: 'Last Read: Introduction of UI/UX',
-  //     module: '154',
-  //     completedModule: '12',
-  //   },
+//   {
+//     img: 'https://i.ibb.co/2qYdCVc/Mern-stark.png',
+//     courseName: 'Mern Stack',
+//     enrollDate: 'Enrolled on 23 June, 2023',
+//     time: 'Last Read: Learn Mern Stack',
+//     module: '154',
+//     completedModule: '50',
+//   },
+//   {
+//     img: 'https://i.ibb.co/dcQynTD/ui-ux-design.png',
+//     courseName: 'UI/UX design',
+//     enrollDate: 'Enrolled on 12 may, 2023',
+//     time: 'Last Read: Introduction of UI/UX',
+//     module: '154',
+//     completedModule: '12',
+//   },
 
-  //   {
-  //     img: 'https://i.ibb.co/VBJZcwK/data-science.png',
-  //     courseName: 'Data Science',
-  //     enrollDate: 'Enrolled on 12 may, 2023',
-  //     time: 'Last Read: Learn Data Science',
-  //     module: '154',
-  //     completedModule: '1',
-  //   },
+//   {
+//     img: 'https://i.ibb.co/VBJZcwK/data-science.png',
+//     courseName: 'Data Science',
+//     enrollDate: 'Enrolled on 12 may, 2023',
+//     time: 'Last Read: Learn Data Science',
+//     module: '154',
+//     completedModule: '1',
+//   },
 
-  //   {
-  //     img: 'https://i.ibb.co/2qYdCVc/Mern-stark.png',
-  //     courseName: 'Mern Stack',
-  //     enrollDate: 'Enrolled on 23 June, 2023',
-  //     time: 'Last Read: Learn Mern Stack',
-  //     module: '154',
-  //     completedModule: '50',
-  //   },
+//   {
+//     img: 'https://i.ibb.co/2qYdCVc/Mern-stark.png',
+//     courseName: 'Mern Stack',
+//     enrollDate: 'Enrolled on 23 June, 2023',
+//     time: 'Last Read: Learn Mern Stack',
+//     module: '154',
+//     completedModule: '50',
+//   },
 
-  //   {
-  //     img: 'https://i.ibb.co/2qYdCVc/Mern-stark.png',
-  //     courseName: 'Mern Stack',
-  //     enrollDate: 'Enrolled on 23 June, 2023',
-  //     time: 'Last Read: Learn Mern Stack',
-  //     module: '154',
-  //     completedModule: '50',
-  //   },
-  // ]
+//   {
+//     img: 'https://i.ibb.co/2qYdCVc/Mern-stark.png',
+//     courseName: 'Mern Stack',
+//     enrollDate: 'Enrolled on 23 June, 2023',
+//     time: 'Last Read: Learn Mern Stack',
+//     module: '154',
+//     completedModule: '50',
+//   },
+// ]
 
 //   const recomendedCourseDetails: CourseDetails[] = [
 //     {
@@ -116,62 +116,62 @@
 //     },
 //   ]
 
-  // const workshopCourseDetails: CourseDetails[] = [
-  //   {
-  //     img: 'https://i.ibb.co/sH2NrNp/image-112.png',
-  //     courseName: 'The Basics of UI/UX design principals',
-  //     startDate: '12 May, 2024',
-  //     startTime: '12 pm to 2 pm',
-  //     startIn: '02hr :01min',
-  //   },
+// const workshopCourseDetails: CourseDetails[] = [
+//   {
+//     img: 'https://i.ibb.co/sH2NrNp/image-112.png',
+//     courseName: 'The Basics of UI/UX design principals',
+//     startDate: '12 May, 2024',
+//     startTime: '12 pm to 2 pm',
+//     startIn: '02hr :01min',
+//   },
 
-  //   {
-  //     img: 'https://i.ibb.co/S08f1yk/image-113.png',
-  //     courseName: 'The Basics of UI/UX design principals',
-  //     startDate: '12 May, 2024',
-  //     startTime: '12 pm to 2 pm',
-  //     startIn: '02hr :01min',
-  //   },
+//   {
+//     img: 'https://i.ibb.co/S08f1yk/image-113.png',
+//     courseName: 'The Basics of UI/UX design principals',
+//     startDate: '12 May, 2024',
+//     startTime: '12 pm to 2 pm',
+//     startIn: '02hr :01min',
+//   },
 
-  //   {
-  //     img: 'https://i.ibb.co/BGGkVfx/image-114.png',
-  //     courseName: 'The Basics of UI/UX design principals',
-  //     startDate: '12 May, 2024',
-  //     startTime: '12 pm to 2 pm',
-  //     startIn: '02hr :01min',
-  //   },
+//   {
+//     img: 'https://i.ibb.co/BGGkVfx/image-114.png',
+//     courseName: 'The Basics of UI/UX design principals',
+//     startDate: '12 May, 2024',
+//     startTime: '12 pm to 2 pm',
+//     startIn: '02hr :01min',
+//   },
 
-  //   {
-  //     img: 'https://i.ibb.co/BGGkVfx/image-114.png',
-  //     courseName: 'The Basics of UI/UX design principals',
-  //     startDate: '12 May, 2024',
-  //     startTime: '12 pm to 2 pm',
-  //     startIn: '02hr :01min',
-  //   },
-  //   {
-  //     img: 'https://i.ibb.co/S08f1yk/image-113.png',
-  //     courseName: 'The Basics of UI/UX design principals',
-  //     startDate: '12 May, 2024',
-  //     startTime: '12 pm to 2 pm',
-  //     startIn: '02hr :01min',
-  //   },
+//   {
+//     img: 'https://i.ibb.co/BGGkVfx/image-114.png',
+//     courseName: 'The Basics of UI/UX design principals',
+//     startDate: '12 May, 2024',
+//     startTime: '12 pm to 2 pm',
+//     startIn: '02hr :01min',
+//   },
+//   {
+//     img: 'https://i.ibb.co/S08f1yk/image-113.png',
+//     courseName: 'The Basics of UI/UX design principals',
+//     startDate: '12 May, 2024',
+//     startTime: '12 pm to 2 pm',
+//     startIn: '02hr :01min',
+//   },
 
-  //   {
-  //     img: 'https://i.ibb.co/BGGkVfx/image-114.png',
-  //     courseName: 'The Basics of UI/UX design principals',
-  //     startDate: '12 May, 2024',
-  //     startTime: '12 pm to 2 pm',
-  //     startIn: '02hr :01min',
-  //   },
+//   {
+//     img: 'https://i.ibb.co/BGGkVfx/image-114.png',
+//     courseName: 'The Basics of UI/UX design principals',
+//     startDate: '12 May, 2024',
+//     startTime: '12 pm to 2 pm',
+//     startIn: '02hr :01min',
+//   },
 
-  //   {
-  //     img: 'https://i.ibb.co/BGGkVfx/image-114.png',
-  //     courseName: 'The Basics of UI/UX design principals',
-  //     startDate: '12 May, 2024',
-  //     startTime: '12 pm to 2 pm',
-  //     startIn: '02hr :01min',
-  //   },
-  // ]
+//   {
+//     img: 'https://i.ibb.co/BGGkVfx/image-114.png',
+//     courseName: 'The Basics of UI/UX design principals',
+//     startDate: '12 May, 2024',
+//     startTime: '12 pm to 2 pm',
+//     startIn: '02hr :01min',
+//   },
+// ]
 
 //   //  const tabs = ["All", "In progress", "Yet to start", "Completed"];
 //   const tabs = [
@@ -219,8 +219,6 @@
 
 // export default EnrolledCourse
 
-
-
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import CarouselComponent from '../CarouselComponent/CarouselComponent'
@@ -252,10 +250,12 @@ interface ApiCourseDetails {
 }
 
 const CourseDataProvider = (): JSX.Element => {
-  const [recommendedCourses, setRecommendedCourses] = useState<CourseDetails[]>([])
+  const [recommendedCourses, setRecommendedCourses] = useState<CourseDetails[]>(
+    []
+  )
 
   useEffect(() => {
-    const fetchRecommendedCourses = async () : Promise<void>=> {
+    const fetchRecommendedCourses = async (): Promise<void> => {
       try {
         const response = await axios.get(API.courses)
         const apiCourses: ApiCourseDetails[] = response.data.courses
