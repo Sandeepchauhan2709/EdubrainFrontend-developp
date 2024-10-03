@@ -1,9 +1,9 @@
+import React , { useEffect, useState } from 'react'
 import userSquare2 from '../../assets/icons/user-square2.svg'
 import ClockImg from '../../assets/icons/clock.svg'
 import rightArrow from '../../assets/icons/right-arrow.svg'
 import leftArrow from '../../assets/icons/left-arrow.svg'
 import play from '../../assets/icons/play.svg'
-import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import ImageCarousel from './ImageCarousel'
@@ -161,8 +161,8 @@ const CourseSection = (): JSX.Element => {
         </div>
         <div className="grid grid-cols-2 gap-3 sm:gap-5 xl:max-w-[414px] mt-3 z-40">
           <Link
-            // to={`/course/${data && data[activeCourse]._id}`}
-            to={`/course/uiux`}
+            to={`/course/${data && data[activeCourse].slug}`}
+            // to={`/course/uiux`}
             className="w-full"
           >
             <SecondaryButton className="w-full">

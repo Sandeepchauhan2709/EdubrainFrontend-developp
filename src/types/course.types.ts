@@ -2,13 +2,14 @@ export interface ICourse {
   _id: string
   title: string
   description: string
+  slug: string
   views: number
   numOfVideos: number
   discountedPercent: number
   basePrice: number
   total_duration: string
   category: string
-  createdBy: string
+  // createdBy: string
   createdAt: string
   poster: {
     url: string
