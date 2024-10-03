@@ -19,7 +19,7 @@ const PriceDetailsCard = ({ items }: { items: ICourse[] }): JSX.Element => {
             ) * 0.9}
           </span>
           <div className="flex gap-4 items-center">
-            <span className="text-sm text-white/85">(10% off)</span> 
+            <span className="text-sm text-white/85">(10% off)</span>
             {/* 10% more of on already discounted price */}
             <span className="line-through text-lg text-white/60">
               ₹{items.reduce((acc, item) => acc + item.basePrice, 0)}
