@@ -1,4 +1,4 @@
-import React , { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import userSquare2 from '../../assets/icons/user-square2.svg'
 import ClockImg from '../../assets/icons/clock.svg'
 import rightArrow from '../../assets/icons/right-arrow.svg'
