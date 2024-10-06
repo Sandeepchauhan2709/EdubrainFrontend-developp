@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import arrowUp from '../../assets/icons/arrow-up.svg'
-import completed  from '../../assets/icons/completed.svg'
+import completed from '../../assets/icons/completed.svg'
 interface LectureCloudLink {
   domain_url: string
   bucket: string
@@ -134,14 +134,13 @@ const CoursePart: React.FC<CoursePartProps> = ({
                         {lecture.lecture_no}. {lecture.lecture_name}
                       </span>
                       {completedLectures.includes(lecture.lecture_no) && (
-                        <span >
-
-<img
-                      src={completed}
-                      width={'22rem'}
-                      alt="checkmark"
-                      // className="invert dark:invert-0"
-                    />
+                        <span>
+                          <img
+                            src={completed}
+                            width={'22rem'}
+                            alt="checkmark"
+                            // className="invert dark:invert-0"
+                          />
                         </span>
                       )}
                     </button>

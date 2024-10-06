@@ -533,19 +533,19 @@ const VideoSection = (): JSX.Element => {
             </div>
           </div>
           <div className="flex flex-col gap-5 w-full">
-      {courses.map((course, index) => (
-        <CoursePart
-          key={course._id}
-          handleVideoChange={handleVideoChange}
-          i={index}
-          progress={videoProgress.toString()}
-          course_name={course.course_name}
-          sections={course.sections}
-          currentLectureNumber={currentLectureNumber}
-          completedLectures={completedLectures}
-        />
-      ))}
-    </div>
+            {courses.map((course, index) => (
+              <CoursePart
+                key={course._id}
+                handleVideoChange={handleVideoChange}
+                i={index}
+                progress={videoProgress.toString()}
+                course_name={course.course_name}
+                sections={course.sections}
+                currentLectureNumber={currentLectureNumber}
+                completedLectures={completedLectures}
+              />
+            ))}
+          </div>
         </div>
       </main>
     </div>
