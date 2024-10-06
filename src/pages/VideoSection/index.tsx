@@ -58,6 +58,7 @@ const VideoSection = (): JSX.Element => {
   const [hasPrevLecture, setHasPrevLecture] = useState<boolean>(false)
   const [hasNextLecture, setHasNextLecture] = useState<boolean>(false)
   const [lectureName, setLectureName] = useState<string>('')
+  const [completedLectures, setCompletedLectures] = useState<number[]>([])
   const { data: userData } = useQuery({
     queryKey: ['user'],
     queryFn: handleGetUser,
@@ -249,6 +250,8 @@ const VideoSection = (): JSX.Element => {
         setTotalNumber(totalno)
         const progressCurrent: number = progressData.overallProgress
         setCourseProgress(progressCurrent)
+        const completed: number[] = progressData.completedLectureArray
+        setCompletedLectures(completed)
       } catch (error) {
         console.error('Error fetching course progress:', error)
       }
@@ -530,18 +533,19 @@ const VideoSection = (): JSX.Element => {
             </div>
           </div>
           <div className="flex flex-col gap-5 w-full">
-            {courses.map((course, index) => (
-              <CoursePart
-                key={course._id}
-                handleVideoChange={handleVideoChange}
-                i={index}
-                progress={videoProgress.toString()}
-                course_name={course.course_name}
-                sections={course.sections}
-                currentLectureNumber={currentLectureNumber}
-              />
-            ))}
-          </div>
+      {courses.map((course, index) => (
+        <CoursePart
+          key={course._id}
+          handleVideoChange={handleVideoChange}
+          i={index}
+          progress={videoProgress.toString()}
+          course_name={course.course_name}
+          sections={course.sections}
+          currentLectureNumber={currentLectureNumber}
+          completedLectures={completedLectures}
+        />
+      ))}
+    </div>
         </div>
       </main>
     </div>

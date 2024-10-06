@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import arrowUp from '../../assets/icons/arrow-up.svg'
-
+import completed  from '../../assets/icons/completed.svg'
 interface LectureCloudLink {
   domain_url: string
   bucket: string
@@ -35,6 +35,7 @@ interface CoursePartProps {
   course_name: string
   sections: Section[]
   currentLectureNumber: number
+  completedLectures: number[]
 }
 
 const CoursePart: React.FC<CoursePartProps> = ({
@@ -44,6 +45,7 @@ const CoursePart: React.FC<CoursePartProps> = ({
   course_name,
   sections,
   currentLectureNumber,
+  completedLectures,
 }) => {
   const [isActive, setIsActive] = useState(false)
   const normalizedProgress =
@@ -122,7 +124,7 @@ const CoursePart: React.FC<CoursePartProps> = ({
                         )
                       }}
                       key={lecture._id}
-                      className={`w-full body-text-sm text-foreground-light dark:text-neutral-10 flex justify-between px-4 py-3 rounded-xl ${
+                      className={`w-full body-text-sm text-foreground-light dark:text-neutral-10 flex justify-between items-center px-4 py-3 rounded-xl ${
                         lecture.lecture_no === currentLectureNumber
                           ? 'dark:bg-neutral-95 bg-foreground-light/10'
                           : 'border dark:border-neutral-90 border-foreground-light/20'
@@ -131,6 +133,17 @@ const CoursePart: React.FC<CoursePartProps> = ({
                       <span>
                         {lecture.lecture_no}. {lecture.lecture_name}
                       </span>
+                      {completedLectures.includes(lecture.lecture_no) && (
+                        <span >
+
+<img
+                      src={completed}
+                      width={'22rem'}
+                      alt="checkmark"
+                      // className="invert dark:invert-0"
+                    />
+                        </span>
+                      )}
                     </button>
                   ))}
                 </div>
