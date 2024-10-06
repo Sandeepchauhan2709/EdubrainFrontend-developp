@@ -106,7 +106,78 @@ const CarouselComponent = ({
           </div>
 
           {/* Tabs content Here */}
+          {/* <div className="mt-8">
+  <div className="">
+    {activeTab === 'tab1' && (
+      <div className="flex items-center min-h-[300px]">
+        <div className="overflow-hidden">
+          <div className="flex justify-between items-center">
+            <div
+              className="ease-linear duration-300 flex gap-6"
+              style={{
+                transform: `translateX(-${currentSlider * 342}px)`,
+              }}
+            >
+              {(courseDetails.length > 0) ? (
+                courseDetails.map((cd, ind) => (
+                  <CourseCard key={ind} details={cd} />
+                ))
+              ) : (
+                <div className='items-center'>
+                <h1 className="text-white text-2xl md:text-3xl lg:text-4xl text-center">
+                  Your next big opportunity is waiting. <br /> Enroll in a course and explore new possibilities!
+                </h1></div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    )} */}
+
           <div className="mt-8">
+            <div className="">
+              {activeTab === 'tab1' && (
+                <div className="flex items-center min-h-[300px]">
+                  <div className="overflow-hidden w-full">
+                    <div className="flex justify-between items-center relative">
+                      <div
+                        className="ease-linear duration-300 flex gap-6 w-full"
+                        style={{
+                          transform: `translateX(-${currentSlider * 342}px)`,
+                        }}
+                      >
+                        {courseDetails.length > 0 ? (
+                          courseDetails.map((cd, ind) => (
+                            <CourseCard key={ind} details={cd} />
+                          ))
+                        ) : (
+                          <div className="flex justify-center items-center w-full">
+                            <h1 className="dark:text-white text-background md:text-xl lg:text-3xl text-center">
+                              {/* Your next big span opportunity is waiting. <br /> Enroll in a course and explore new possibilities! */}
+                              Your journey to{' '}
+                              <span className="text-[#4371d4] font-extrabold">
+                                success starts!
+                              </span>{' '}
+                              <br />
+                              <span className="text-[white] px-2 rounded-md bg-primary-60">
+                                Enroll Now
+                              </span>{' '}
+                              in a course and{' '}
+                              <p>
+                                <span className="bg-[yellow] underline font-[600] text-[black] px-3 py-0 rounded-md">
+                                  open new doors!
+                                </span>
+                              </p>
+                            </h1>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* <div className="mt-8">
             <div className="">
               {activeTab === 'tab1' && (
                 <div className="flex items-center min-h-[300px]">
@@ -126,7 +197,7 @@ const CarouselComponent = ({
                     </div>
                   </div>
                 </div>
-              )}
+              )} */}
 
               <div className="">
                 {activeTab === 'tab2' && (

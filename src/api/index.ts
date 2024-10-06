@@ -8,7 +8,7 @@ const API = {
   courses: BASE_URL + '/courses',
   coursedata: BASE_URL + '/coursesdata',
   courseprogress: BASE_URL + '/progress/',
-  // //:userId/:courseId/:courseName
+  enrolledcourses: BASE_URL + '/my-enrollments',
   savepartialProgress: BASE_URL + '/partial/',
   lastLecture: BASE_URL + '/progress/lastLecture/',
   // savecompleteProgress: BASE_URL + '/complete-course',
