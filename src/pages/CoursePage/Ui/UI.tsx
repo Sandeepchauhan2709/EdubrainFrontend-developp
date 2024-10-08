@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Card from './Card'
 import Hero from './Hero'
 import Curriculum from './Curriculum'
@@ -9,7 +9,7 @@ import Payment from './Subscrition'
 import FAQSection from '../../Home/FAQSection'
 import SecondaryButton from '../../../components/buttons/SecondaryButton'
 import PrimaryButton from '../../../components/buttons/PrimaryButton'
-import InfoCard from '../../../pages/CoursePage/Ui/InfoCard'
+import API from '../../../api'
 
 interface UiProps {
   data: {
@@ -18,24 +18,64 @@ interface UiProps {
     subtitle1: string
     poster: string
     Cardtitle: string
-    Cardsubtitle: string
-    Cardsubtitle1: string
-    infoCardtitle: string
-    infoCardsubtitle: string
-    infoCardsubtitle1: string
-    benefits: Benefit[]
-    infobenefits: Benefit[]
+  
   }
 }
 
-interface Benefit {
-  icon: string
-  title: string
-  description: string
+interface Course {
+  _id: string
+  course_name: string
+  sections: Section[]
+}
+
+interface Section {
+  _id: string
+  section_no: number
+  section_name: string
+  section_lectures: Lecture[]
+}
+
+interface Lecture {
+  _id: string
+  lecture_no: number
+  lecture_name: string
 }
 
 const UI: React.FC<UiProps> = ({ data }) => {
-  console.log(data)
+  const [courseData, setCourseData] = useState<Course | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchCourseData = async (): Promise<void> => {
+      try {
+        setIsLoading(true)
+        const response = await fetch(API.coursedata)
+        if (!response.ok) {
+          throw new Error('Failed to fetch course data')
+        }
+        const fetchedData = await response.json() as Course | Course[]
+        setCourseData(Array.isArray(fetchedData) ? fetchedData[0] : fetchedData)
+      } catch (error) {
+        console.error('Error fetching course data:', error)
+        setError('Failed to load course data. Please try again later.')
+      }finally {
+        setIsLoading(false)
+    }
+  }
+
+    fetchCourseData()
+  }, [])
+
+
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  if (error) {
+    return <div>{error}</div>
+  }
+
   return (
     <div className="overflow-hidden">
       <Hero
@@ -47,17 +87,12 @@ const UI: React.FC<UiProps> = ({ data }) => {
       />
       <Card
         title1={data.Cardtitle}
-        subtitle={data.Cardsubtitle}
-        subtitle1={data.Cardsubtitle1}
-        benefits={data.benefits}
       />
-      <InfoCard
-        title1={data.infoCardtitle}
-        subtitle={data.infoCardsubtitle}
-        subtitle1={data.infoCardsubtitle1}
-        benefits={data.infobenefits}
-      />
-      <Curriculum />
+      {courseData && (
+        <Curriculum 
+        sections={courseData.sections}
+        courseTitle={courseData.course_name}  />
+      )}
       <SliderCard />
       <Certification />
       <Sectionlearn />
@@ -96,7 +131,7 @@ const UI: React.FC<UiProps> = ({ data }) => {
             Are you Ready to become
           </span>
           <span className="text-[48px] font-700 font-Roboto text-white max-sm:text-[24px]">
-            Master in UI/UX design?
+            Master in {courseData ? courseData.course_name : 'this course'}?
           </span>
           <div className="flex gap-3 py-6 justify-center">
             <SecondaryButton>See the curriculum</SecondaryButton>
