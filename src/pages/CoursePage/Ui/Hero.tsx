@@ -4,7 +4,6 @@ import Video from './Video'
 import PrimaryButton from '../../../components/buttons/PrimaryButton'
 import SecondaryButton from '../../../components/buttons/SecondaryButton'
 
-
 interface HeroProps {
   title: string
   subtitle: string
@@ -20,8 +19,6 @@ const Hero: React.FC<HeroProps> = ({
   videoSrc,
   poster,
 }) => {
-
-
   return (
     <div className="flex flex-col text-white pt-[60px] font-bold gap-6">
       <div className="flex justify-center">
@@ -33,7 +30,6 @@ const Hero: React.FC<HeroProps> = ({
             <span className="text-[36px] font-medium font-Lato text-[#ABAEB2] text-center max-sm:text-[22px]">
               {subtitle}
             </span>
-           
           </div>
         </div>
       </div>

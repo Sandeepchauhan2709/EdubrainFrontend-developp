@@ -28,7 +28,6 @@ const Card: React.FC<CardProps> = ({
           <div className="flex justify-center">
             <span className="font font-400 text-[#246BFD] font-Lato text-[24px]">
               {/* {title1} */}
-              
             </span>
           </div>
           <div className="flex justify-center">

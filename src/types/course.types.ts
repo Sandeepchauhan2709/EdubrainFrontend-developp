@@ -17,7 +17,6 @@
 //   }
 // }
 
-
 export interface ICourse {
   _id: string
   title: string
@@ -30,11 +29,11 @@ export interface ICourse {
   total_duration: string
   category?: string
   syllabus?: Array<{
-    title: string;
-    description: string;
-  }>;
-  features?: Array<string>;
-  
+    title: string
+    description: string
+  }>
+  features?: string[]
+
   // content?: CourseContent;
   // createdBy: string
   createdAt: string
@@ -43,11 +42,11 @@ export interface ICourse {
     public_id: string
   }
   sections: Array<{
-    section_no: number;
-    section_name: string;
+    section_no: number
+    section_name: string
     section_lectures: Array<{
-      lecture_no: number;
-      lecture_name: string;
-    }>;
-  }>;
+      lecture_no: number
+      lecture_name: string
+    }>
+  }>
 }

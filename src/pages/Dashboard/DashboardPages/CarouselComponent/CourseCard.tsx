@@ -143,8 +143,6 @@ import { useQuery } from '@tanstack/react-query'
 // import API from '../../../../api/index'
 // import toast from 'react-hot-toast'
 
-
-
 interface CourseDetails {
   img: string
   courseName: string
@@ -161,8 +159,8 @@ interface CourseDetails {
   isEnrolled: boolean
   slug: string
   enrolledOrRecommended?: boolean
-  courseDetailsId?: string 
-  price?: number 
+  courseDetailsId?: string
+  price?: number
 }
 
 const CourseCard = ({ details }: { details: CourseDetails }): JSX.Element => {
@@ -171,7 +169,7 @@ const CourseCard = ({ details }: { details: CourseDetails }): JSX.Element => {
     queryKey: ['user'],
     queryFn: handleGetUser,
   })
-  
+
   const user: any = userData
   const useremail: string = user?.email || ''
 
@@ -187,7 +185,7 @@ const CourseCard = ({ details }: { details: CourseDetails }): JSX.Element => {
   //   try {
   //     const enrollmentData = {
   //       courseDetailsId: details.courseDetailsId,
-  //       paymentAmount: details.price || 0, 
+  //       paymentAmount: details.price || 0,
   //       paymentMethod: 'default' // You can modify this based on your payment implementation
   //     }
   //     console.log(enrollmentData)
@@ -215,14 +213,12 @@ const CourseCard = ({ details }: { details: CourseDetails }): JSX.Element => {
   //     const errorMessage = error.response?.data?.message || 'Failed to enroll in course'
   //     toast.error(`${errorMessage}`)
   //     console.error('Enrollment error:', error)
-  //   } 
+  //   }
   // }
 
-  const handleEnroll = (coursename : string): void => {
-  
+  const handleEnroll = (coursename: string): void => {
     // console.log(`https://pages.razorpay.com/pl_PCndOh475OhoA1/view?product=powerbi&email=${useremail}`)
-    window.location.href = `https://pages.razorpay.com/pl_PCndOh475OhoA1/view?product=${coursename}&email=${useremail}`;
-    
+    window.location.href = `https://pages.razorpay.com/pl_PCndOh475OhoA1/view?product=${coursename}&email=${useremail}`
   }
   // console.log(details);
   if (details.enrolledOrRecommended) {
@@ -314,7 +310,7 @@ const CourseCard = ({ details }: { details: CourseDetails }): JSX.Element => {
               >
                 View Detail
               </button>
-              
+
               {/* <button
   className={`text-neutral-10 text-base px-4 py-3 rounded-xl w-1/2 ${
     details.isEnrolled
@@ -331,17 +327,19 @@ const CourseCard = ({ details }: { details: CourseDetails }): JSX.Element => {
   {details.isEnrolled ? 'Enrolled' : 'Enroll Now!'}
 </button> */}
 
-<button
-  className={`text-neutral-10 text-base px-4 py-3 rounded-xl w-1/2 ${
-    details.isEnrolled
-      ? 'bg-neutral-55 cursor-not-allowed'
-      : 'bg-primary-60 hover:bg-blue-700 transition duration-300'
-  }`}
-  disabled={details.isEnrolled}
-  onClick={() =>{ handleEnroll(details.courseName)}}
->
-  {details.isEnrolled ? 'Enrolled' : 'Enroll Now!'}
-</button>
+              <button
+                className={`text-neutral-10 text-base px-4 py-3 rounded-xl w-1/2 ${
+                  details.isEnrolled
+                    ? 'bg-neutral-55 cursor-not-allowed'
+                    : 'bg-primary-60 hover:bg-blue-700 transition duration-300'
+                }`}
+                disabled={details.isEnrolled}
+                onClick={() => {
+                  handleEnroll(details.courseName)
+                }}
+              >
+                {details.isEnrolled ? 'Enrolled' : 'Enroll Now!'}
+              </button>
             </div>
           </div>
         </div>

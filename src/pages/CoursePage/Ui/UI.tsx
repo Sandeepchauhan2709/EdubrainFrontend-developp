@@ -18,7 +18,6 @@ interface UiProps {
     subtitle1: string
     poster: string
     Cardtitle: string
-  
   }
 }
 
@@ -54,19 +53,18 @@ const UI: React.FC<UiProps> = ({ data }) => {
         if (!response.ok) {
           throw new Error('Failed to fetch course data')
         }
-        const fetchedData = await response.json() as Course | Course[]
+        const fetchedData = (await response.json()) as Course | Course[]
         setCourseData(Array.isArray(fetchedData) ? fetchedData[0] : fetchedData)
       } catch (error) {
         console.error('Error fetching course data:', error)
         setError('Failed to load course data. Please try again later.')
-      }finally {
+      } finally {
         setIsLoading(false)
+      }
     }
-  }
 
     fetchCourseData()
   }, [])
-
 
   if (isLoading) {
     return <div>Loading...</div>
@@ -85,13 +83,12 @@ const UI: React.FC<UiProps> = ({ data }) => {
         videoSrc=""
         poster={data.poster}
       />
-      <Card
-        title1={data.Cardtitle}
-      />
+      <Card title1={data.Cardtitle} />
       {courseData && (
-        <Curriculum 
-        sections={courseData.sections}
-        courseTitle={courseData.course_name}  />
+        <Curriculum
+          sections={courseData.sections}
+          courseTitle={courseData.course_name}
+        />
       )}
       <SliderCard />
       <Certification />

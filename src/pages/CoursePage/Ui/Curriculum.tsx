@@ -93,7 +93,8 @@ const Curriculum: React.FC<CurriculumProps> = ({ sections, courseTitle }) => {
             Your Learning Journey
           </h2>
           <p className="text-2xl text-white max-sm:text-xl">
-            Navigating the <span className="font-semibold">{courseTitle}</span> Curriculum
+            Navigating the <span className="font-semibold">{courseTitle}</span>{' '}
+            Curriculum
           </p>
         </div>
       </div>
@@ -102,7 +103,9 @@ const Curriculum: React.FC<CurriculumProps> = ({ sections, courseTitle }) => {
           <button
             key={section._id}
             className={`border px-4 py-2 rounded-xl ${isActivePart1(index)}`}
-            onClick={() => {handlePartClick(index);}}
+            onClick={() => {
+              handlePartClick(index)
+            }}
           >
             Section-{section.section_no}
           </button>
@@ -126,7 +129,9 @@ const Curriculum: React.FC<CurriculumProps> = ({ sections, courseTitle }) => {
                   <li
                     key={section._id}
                     className={`cursor-pointer ${isActive(index)}`}
-                    onClick={() => {handleClick(index);}}
+                    onClick={() => {
+                      handleClick(index)
+                    }}
                   >
                     {section.section_name}
                   </li>
@@ -158,7 +163,8 @@ const Curriculum: React.FC<CurriculumProps> = ({ sections, courseTitle }) => {
               {sections.reduce(
                 (total, section) => total + section.section_lectures.length,
                 0
-              )}+
+              )}
+              +
             </span>
             <span className="text-[#246BFD]">Lectures</span>
           </div>
@@ -181,5 +187,3 @@ const Curriculum: React.FC<CurriculumProps> = ({ sections, courseTitle }) => {
 }
 
 export default Curriculum
-
-

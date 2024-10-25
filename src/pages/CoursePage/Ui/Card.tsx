@@ -1,5 +1,3 @@
-
-
 import React from 'react'
 import PrimaryButton from '../../../components/buttons/PrimaryButton'
 import SecondaryButton from '../../../components/buttons/SecondaryButton'
@@ -25,7 +23,8 @@ const benefitsData: Benefit[] = [
   {
     icon: dollar,
     title: 'High Earning Potential',
-    description: 'Tap into high-paying opportunities with your design expertise.',
+    description:
+      'Tap into high-paying opportunities with your design expertise.',
   },
   {
     icon: briefcase,
@@ -40,7 +39,8 @@ const benefitsData: Benefit[] = [
   {
     icon: house,
     title: 'Work-From-Home Ready',
-    description: 'Unlock career flexibility with the freedom to work from home.',
+    description:
+      'Unlock career flexibility with the freedom to work from home.',
   },
   {
     icon: profile,
@@ -50,13 +50,12 @@ const benefitsData: Benefit[] = [
   {
     icon: status,
     title: 'Continuous Innovation',
-    description: 'UI/UX design: Constant learning, innovation in a dynamic field.',
+    description:
+      'UI/UX design: Constant learning, innovation in a dynamic field.',
   },
 ]
 
-const BenefitsCard: React.FC<CardProps> = ({
-  title1,
-}) => {
+const BenefitsCard: React.FC<CardProps> = ({ title1 }) => {
   return (
     <>
       <div className="flex justify-center pt-[100px]">
@@ -68,7 +67,7 @@ const BenefitsCard: React.FC<CardProps> = ({
           </div>
           <div className="flex justify-center">
             <span className="text-[48px] font-900 pt-0 text-white text-center max-sm:text-[24px]">
-             Why you should Master <br /> <span>{title1}?</span>
+              Why you should Master <br /> <span>{title1}?</span>
             </span>
           </div>
         </div>
@@ -82,8 +81,12 @@ const BenefitsCard: React.FC<CardProps> = ({
                 className="bg-[#121721] flex justify-center max-xl:w-[300px] flex-col rounded-xl w-[400px] h-[224px] max-lg:w-[300px] max-sm:w-[300px] gap-3 border border-[#2D2E30]"
               >
                 <div className="flex justify-center">
-                  <img src={benefit.icon} alt={benefit.title} className="w-12 h-12" />
-                  <img  alt={benefit.title} className="w-12 h-12" />
+                  <img
+                    src={benefit.icon}
+                    alt={benefit.title}
+                    className="w-12 h-12"
+                  />
+                  <img alt={benefit.title} className="w-12 h-12" />
                 </div>
                 <div className="flex justify-center text-white text-[24px]">
                   <span>{benefit.title}</span>

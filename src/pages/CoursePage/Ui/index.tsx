@@ -8,25 +8,28 @@ import { getAllCourses } from '../../../api/courses'
 import type { ICourse } from '../../../types/course.types'
 
 interface UIDataType {
-  title: string;
-  subtitle: string;
-  subtitle1: string;
-  poster: string;
-  Cardtitle: string;
-
+  title: string
+  subtitle: string
+  subtitle1: string
+  poster: string
+  Cardtitle: string
 }
 
 const HomePage = (): JSX.Element => {
   const { page } = useParams<{ page: string }>()
   const navigate = useNavigate()
 
-  const { data: courses, isLoading, isError } = useQuery<ICourse[]>({
+  const {
+    data: courses,
+    isLoading,
+    isError,
+  } = useQuery<ICourse[]>({
     queryKey: ['courses'],
     queryFn: getAllCourses,
   })
 
   useEffect(() => {
-    if (page && courses && !courses.some(course => course.slug === page)) {
+    if (page && courses && !courses.some((course) => course.slug === page)) {
       toast.error('Route not matched. Redirecting to home page...')
       setTimeout(() => {
         navigate('/')
@@ -56,7 +59,7 @@ const HomePage = (): JSX.Element => {
     )
   }
 
-  const currentCourse = courses?.find(course => course.slug === page)
+  const currentCourse = courses?.find((course) => course.slug === page)
 
   const transformCourseData = (course: ICourse): UIDataType => {
     return {
@@ -65,7 +68,6 @@ const HomePage = (): JSX.Element => {
       subtitle1: course.category || '',
       poster: course.poster?.url || '',
       Cardtitle: course.title,
-   
     }
   }
 
@@ -73,7 +75,9 @@ const HomePage = (): JSX.Element => {
     <div className="dark bg-background">
       <Navbar />
       <main className="mt-[64px] xl:mt-[80px]">
-        {page && currentCourse && <UI data={transformCourseData(currentCourse)} />}
+        {page && currentCourse && (
+          <UI data={transformCourseData(currentCourse)} />
+        )}
         {page && !currentCourse && <div>Course not found</div>}
       </main>
     </div>

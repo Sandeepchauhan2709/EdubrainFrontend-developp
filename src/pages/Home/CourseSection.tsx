@@ -22,7 +22,8 @@ import play from '../../assets/icons/play.svg'
 const CourseSection = (): JSX.Element => {
   const dispatch = useDispatch()
   const { cartItems } = useSelector((state: RootState) => state.cartItems)
-  const [isCurrentCourseAddedToCart, setIsCurrentCourseAddedToCart] = useState(false)
+  const [isCurrentCourseAddedToCart, setIsCurrentCourseAddedToCart] =
+    useState(false)
   const [activeCourse, setActiveCourse] = useState(0)
   const [isReadMoreActive, setIsReadMoreActive] = useState(false)
 
@@ -57,7 +58,10 @@ const CourseSection = (): JSX.Element => {
     <div className="flex flex-col-reverse xl:flex-row xl:justify-center xl:gap-28 xl:items-center w-full gap-8 mt-8">
       <div className="flex flex-col gap-4 sm:gap-6 xl:max-w-[600px]">
         <div className="flex flex-col">
-          <motion.span layout className="text-primary-30 text-base sm:text-xl xl:text-2xl">
+          <motion.span
+            layout
+            className="text-primary-30 text-base sm:text-xl xl:text-2xl"
+          >
             {currentCourse.category}
           </motion.span>
           <div className="h-[28.8px] sm:h-[38.8px] xl:h-[57px]">
@@ -79,8 +83,8 @@ const CourseSection = (): JSX.Element => {
             {isReadMoreActive
               ? currentCourse.description
               : currentCourse.description
-              ? currentCourse.description.substring(0, 130) + '...'
-              : ''}
+                ? currentCourse.description.substring(0, 130) + '...'
+                : ''}
           </span>
           <button
             onClick={() => {
@@ -140,10 +144,7 @@ const CourseSection = (): JSX.Element => {
           </div>
         </div>
         <div className="grid grid-cols-2 gap-3 sm:gap-5 xl:max-w-[414px] mt-3 z-40">
-          <Link
-            to={`/course/${currentCourse.slug}`}
-            className="w-full"
-          >
+          <Link to={`/course/${currentCourse.slug}`} className="w-full">
             <SecondaryButton className="w-full">
               Let&apos;s Explore It
             </SecondaryButton>
@@ -157,8 +158,8 @@ const CourseSection = (): JSX.Element => {
                   discountedPercent: currentCourse.discountedPercent,
                   basePrice: currentCourse.basePrice,
                 })
-              );
-              handleCourseChange('next');
+              )
+              handleCourseChange('next')
             }}
             className={`w-full h-full ${
               isCurrentCourseAddedToCart ? 'pointer-events-none opacity-70' : ''
@@ -171,15 +172,27 @@ const CourseSection = (): JSX.Element => {
       </div>
       <div className="flex flex-grow max-w-5xl flex-col items-end gap-4">
         <div className="gap-4 items-center mr-6 hidden xl:flex">
-          <button onClick={() => {
-            handleCourseChange('prev');
-          }}>
-            <img src={leftArrow} alt="Previous" className="h-8 w-8 lg:h-12 lg:w-12" />
+          <button
+            onClick={() => {
+              handleCourseChange('prev')
+            }}
+          >
+            <img
+              src={leftArrow}
+              alt="Previous"
+              className="h-8 w-8 lg:h-12 lg:w-12"
+            />
           </button>
-          <button onClick={() => {
-            handleCourseChange('next');
-          }}>
-            <img src={rightArrow} alt="Next" className="h-8 w-8 lg:h-12 lg:w-12" />
+          <button
+            onClick={() => {
+              handleCourseChange('next')
+            }}
+          >
+            <img
+              src={rightArrow}
+              alt="Next"
+              className="h-8 w-8 lg:h-12 lg:w-12"
+            />
           </button>
         </div>
         <div className="relative w-full">

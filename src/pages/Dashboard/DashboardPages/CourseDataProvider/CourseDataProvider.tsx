@@ -135,8 +135,8 @@ export interface CourseDetails {
   slug: string
   isEnrolled: boolean
   enrolledOrRecommended?: boolean
-  courseDetailsId?: string 
-  price?: number 
+  courseDetailsId?: string
+  price?: number
 }
 
 interface ApiCourseDetails {
