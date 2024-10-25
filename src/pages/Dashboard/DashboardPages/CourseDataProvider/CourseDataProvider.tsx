@@ -135,6 +135,8 @@ export interface CourseDetails {
   slug: string
   isEnrolled: boolean
   enrolledOrRecommended?: boolean
+  courseDetailsId?: string 
+  price?: number 
 }
 
 interface ApiCourseDetails {
@@ -193,6 +195,7 @@ const CourseDataProvider = (): JSX.Element => {
 
         const formattedCourses: CourseDetails[] = apiCourses.map((course) => ({
           img: course.poster.url,
+          courseDetailsId: course._id,
           courseName: course.title,
           lecture: `${course.numOfVideos} Lecture${course.numOfVideos !== 1 ? 's' : ''}`,
           duration: course.total_duration,

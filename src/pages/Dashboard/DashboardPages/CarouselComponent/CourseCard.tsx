@@ -137,6 +137,13 @@ import { FaPlay } from 'react-icons/fa'
 import clock from '../../../../assets/clock.png'
 import userIcon from '../../../../assets/user-square.png'
 import { useNavigate } from 'react-router-dom'
+import { handleGetUser } from '../../../../api/user'
+import { useQuery } from '@tanstack/react-query'
+// import axios from 'axios'
+// import API from '../../../../api/index'
+// import toast from 'react-hot-toast'
+
+
 
 interface CourseDetails {
   img: string
@@ -154,17 +161,70 @@ interface CourseDetails {
   isEnrolled: boolean
   slug: string
   enrolledOrRecommended?: boolean
+  courseDetailsId?: string 
+  price?: number 
 }
 
 const CourseCard = ({ details }: { details: CourseDetails }): JSX.Element => {
   const navigate = useNavigate()
+  const { data: userData } = useQuery({
+    queryKey: ['user'],
+    queryFn: handleGetUser,
+  })
+  
+  const user: any = userData
+  const useremail: string = user?.email || ''
+
   const handleClickCourse = (): void => {
     navigate(`/lecture/${details.slug}`)
   }
   const handleClickCourseDetailsPage = (): void => {
     navigate(`/course/${details.slug}`)
   }
+  // const [ setIsEnrolling] = useState(false)
 
+  // const handleEnroll = async (): Promise<void> => {
+  //   try {
+  //     const enrollmentData = {
+  //       courseDetailsId: details.courseDetailsId,
+  //       paymentAmount: details.price || 0, 
+  //       paymentMethod: 'default' // You can modify this based on your payment implementation
+  //     }
+  //     console.log(enrollmentData)
+  //     const response = await axios.post(
+  //       API.enroll,
+  //       enrollmentData,
+  //       {
+  //         headers: {
+  //           'Content-Type': 'application/json'
+  //         },
+  //         withCredentials: true // Important for sending cookies if using session-based auth
+  //       }
+  //     )
+
+  //     if (response.data.success) {
+  //       // Show success message
+  //       toast.success('Successfully enrolled in the course!')
+  //       // Update local state
+  //       details.isEnrolled = true
+  //       // Optionally redirect to the course page
+  //       navigate(`/lecture/${details.slug}`)
+  //     }
+  //   } catch (error: any) {
+  //     // Handle enrollment errors
+  //     const errorMessage = error.response?.data?.message || 'Failed to enroll in course'
+  //     toast.error(`${errorMessage}`)
+  //     console.error('Enrollment error:', error)
+  //   } 
+  // }
+
+  const handleEnroll = (coursename : string): void => {
+  
+    // console.log(`https://pages.razorpay.com/pl_PCndOh475OhoA1/view?product=powerbi&email=${useremail}`)
+    window.location.href = `https://pages.razorpay.com/pl_PCndOh475OhoA1/view?product=${coursename}&email=${useremail}`;
+    
+  }
+  // console.log(details);
   if (details.enrolledOrRecommended) {
     // Enrolled course card
     return (
@@ -254,16 +314,34 @@ const CourseCard = ({ details }: { details: CourseDetails }): JSX.Element => {
               >
                 View Detail
               </button>
-              <button
-                className={`text-neutral-10 text-base px-4 py-3 rounded-xl w-1/2 ${
-                  details.isEnrolled
-                    ? 'bg-neutral-55 cursor-not-allowed'
-                    : 'bg-primary-60 hover:bg-blue-700 transition duration-300'
-                }`}
-                disabled={details.isEnrolled}
-              >
-                {details.isEnrolled ? 'Enrolled' : 'Enroll Now!'}
-              </button>
+              
+              {/* <button
+  className={`text-neutral-10 text-base px-4 py-3 rounded-xl w-1/2 ${
+    details.isEnrolled
+      ? 'bg-neutral-55 cursor-not-allowed'
+      : 'bg-primary-60 hover:bg-blue-700 transition duration-300'
+  }`}
+  disabled={details.isEnrolled}
+  onClick={(e) => {
+    handleEnroll().catch(error => {
+      console.error('Enrollment error:', error);
+    });
+  }}
+>
+  {details.isEnrolled ? 'Enrolled' : 'Enroll Now!'}
+</button> */}
+
+<button
+  className={`text-neutral-10 text-base px-4 py-3 rounded-xl w-1/2 ${
+    details.isEnrolled
+      ? 'bg-neutral-55 cursor-not-allowed'
+      : 'bg-primary-60 hover:bg-blue-700 transition duration-300'
+  }`}
+  disabled={details.isEnrolled}
+  onClick={() =>{ handleEnroll(details.courseName)}}
+>
+  {details.isEnrolled ? 'Enrolled' : 'Enroll Now!'}
+</button>
             </div>
           </div>
         </div>

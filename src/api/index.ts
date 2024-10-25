@@ -9,6 +9,7 @@ const API = {
   coursedata: BASE_URL + '/coursesdata',
   courseprogress: BASE_URL + '/progress/',
   enrolledcourses: BASE_URL + '/my-enrollments',
+  enroll: BASE_URL + '/enroll/',
   savepartialProgress: BASE_URL + '/partial/',
   lastLecture: BASE_URL + '/progress/lastLecture/',
   // savecompleteProgress: BASE_URL + '/complete-course',
