@@ -36,9 +36,6 @@ const Playlist: React.FC<{ lecture: Lecture }> = ({ lecture }) => {
               Preview
             </span>
           </div> */}
-          <div className="hidden sm:block">
-            <span className="text-white text-xs">9:52</span>
-          </div>
         </div>
       </div>
       <hr className="bg-white my-2" />

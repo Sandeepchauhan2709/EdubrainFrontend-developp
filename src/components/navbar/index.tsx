@@ -101,7 +101,7 @@ const Navbar = ({ onClick }: { onClick?: () => void }): JSX.Element => {
               <SecondaryButton className="w-full">Login</SecondaryButton>
             </button>
             <Link to="#" className="w-full">
-              <PrimaryButton className="w-full">Enroll Now</PrimaryButton>
+              <PrimaryButton className="w-full">Sign Up</PrimaryButton>
             </Link>
           </div>
         </nav>

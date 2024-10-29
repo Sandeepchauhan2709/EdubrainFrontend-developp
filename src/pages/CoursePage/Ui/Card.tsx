@@ -8,6 +8,8 @@ import teacher from '../../../assets/icons/teacher.svg'
 import house from '../../../assets/icons/house.svg'
 import profile from '../../../assets/icons/profile-2user.svg'
 import status from '../../../assets/icons/status-up.svg'
+import { useQuery } from '@tanstack/react-query'
+import { handleGetUser } from '../../../api/user'
 
 interface Benefit {
   icon: string
@@ -56,6 +58,15 @@ const benefitsData: Benefit[] = [
 ]
 
 const BenefitsCard: React.FC<CardProps> = ({ title1 }) => {
+  const { data: userData } = useQuery({
+    queryKey: ['user'],
+    queryFn: handleGetUser,
+  })
+  const user: any = userData
+  const useremail: string = user?.email || ''
+  const handleEnroll = (courseName: string): void => {
+    window.location.href = `https://pages.razorpay.com/pl_PCndOh475OhoA1/view?product=${courseName}&email=${useremail}`
+  }
   return (
     <>
       <div className="flex justify-center pt-[100px]">
@@ -103,7 +114,7 @@ const BenefitsCard: React.FC<CardProps> = ({ title1 }) => {
       </div>
       <div className="flex gap-3 py-6 justify-center">
         <SecondaryButton>See the curriculum</SecondaryButton>
-        <PrimaryButton>Enroll Now</PrimaryButton>
+        <PrimaryButton onClick={() => {handleEnroll(title1)}}>Enroll Now</PrimaryButton>
       </div>
     </>
   )
