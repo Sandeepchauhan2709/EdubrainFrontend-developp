@@ -168,6 +168,7 @@ const CourseCard = ({ details }: { details: CourseDetails }): JSX.Element => {
   const { data: userData } = useQuery({
     queryKey: ['user'],
     queryFn: handleGetUser,
+    retry: 0,
   })
 
   const user: any = userData

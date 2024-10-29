@@ -8,7 +8,7 @@ import { useRef } from 'react'
 import type { JSX } from 'react'
 import SecondaryButton from '../buttons/SecondaryButton'
 import PrimaryButton from '../buttons/PrimaryButton'
-import shoppingCart from '../../assets/icons/shopping_cart.svg'
+// import shoppingCart from '../../assets/icons/shopping_cart.svg'
 import { useSelector } from 'react-redux'
 import { type RootState } from '../../store'
 
@@ -37,9 +37,9 @@ const Navbar = ({ onClick }: { onClick?: () => void }): JSX.Element => {
           </ul>
           {/* cta buttons */}
           <div className="gap-6 hidden xl:flex items-center">
-            <Link to="/cart">
+            {/* <Link to="/cart">
               <img src={shoppingCart} alt="Shopping Cart" className="h-6 w-6" />
-            </Link>
+            </Link> */}
             <PrimaryButton
               onClick={() => {
                 if (isAuthenticated) {
@@ -101,7 +101,7 @@ const Navbar = ({ onClick }: { onClick?: () => void }): JSX.Element => {
               <SecondaryButton className="w-full">Login</SecondaryButton>
             </button>
             <Link to="#" className="w-full">
-              <PrimaryButton className="w-full">Enroll Now</PrimaryButton>
+              <PrimaryButton className="w-full">Sign Up</PrimaryButton>
             </Link>
           </div>
         </nav>

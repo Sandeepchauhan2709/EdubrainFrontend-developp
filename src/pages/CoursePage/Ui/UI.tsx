@@ -10,6 +10,8 @@ import FAQSection from '../../Home/FAQSection'
 import SecondaryButton from '../../../components/buttons/SecondaryButton'
 import PrimaryButton from '../../../components/buttons/PrimaryButton'
 import API from '../../../api'
+import { handleGetUser } from '../../../api/user'
+import { useQuery } from '@tanstack/react-query'
 
 interface UiProps {
   data: {
@@ -44,7 +46,18 @@ const UI: React.FC<UiProps> = ({ data }) => {
   const [courseData, setCourseData] = useState<Course | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-
+  const { data: userData } = useQuery({
+    queryKey: ['user'],
+    queryFn: handleGetUser,
+    retry: 0,
+  })
+  const user: any = userData
+  const useremail: string = user?.email || ''
+  const handleEnroll = (courseName: string): void => {
+    useremail
+      ? (window.location.href = `https://pages.razorpay.com/pl_PCndOh475OhoA1/view?product=${courseName}&email=${useremail}`)
+      : (window.location.href = `https://pages.razorpay.com/pl_PCndOh475OhoA1/view?product=${courseName}`)
+  }
   useEffect(() => {
     const fetchCourseData = async (): Promise<void> => {
       try {
@@ -128,11 +141,17 @@ const UI: React.FC<UiProps> = ({ data }) => {
             Are you Ready to become
           </span>
           <span className="text-[48px] font-700 font-Roboto text-white max-sm:text-[24px]">
-            Master in {courseData ? courseData.course_name : 'this course'}?
+            Master in {data ? data.title : 'this course'}?
           </span>
           <div className="flex gap-3 py-6 justify-center">
             <SecondaryButton>See the curriculum</SecondaryButton>
-            <PrimaryButton>Enroll Now</PrimaryButton>
+            <PrimaryButton
+              onClick={() => {
+                handleEnroll(data.title)
+              }}
+            >
+              Enroll Now
+            </PrimaryButton>
           </div>
         </div>
       </div>

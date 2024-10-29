@@ -2,8 +2,8 @@ import Marquee from 'react-fast-marquee'
 import sliderImage from '../../../assets/images/slider.svg'
 import slider01Image from '../../../assets/images/Group 1456.svg'
 import slider02Image from '../../../assets/images/Group 1459.svg'
-import PrimaryButton from '../../../components/buttons/PrimaryButton'
-import SecondaryButton from '../../../components/buttons/SecondaryButton'
+// import PrimaryButton from '../../../components/buttons/PrimaryButton'
+// import SecondaryButton from '../../../components/buttons/SecondaryButton'
 import React from 'react'
 
 const SliderCard: React.FC = () => {
@@ -90,10 +90,10 @@ const SliderCard: React.FC = () => {
           </div>
         </div>
       </Marquee>
-      <div className="flex gap-3 py-6 justify-center">
+      {/* <div className="flex gap-3 py-6 justify-center">
         <SecondaryButton>See the curriculum</SecondaryButton>
         <PrimaryButton>Enroll Now</PrimaryButton>
-      </div>
+      </div> */}
     </div>
   )
 }

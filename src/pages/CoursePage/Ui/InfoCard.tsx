@@ -1,6 +1,6 @@
 import React from 'react'
-import PrimaryButton from '../../../components/buttons/PrimaryButton'
-import SecondaryButton from '../../../components/buttons/SecondaryButton'
+// import PrimaryButton from '../../../components/buttons/PrimaryButton'
+// import SecondaryButton from '../../../components/buttons/SecondaryButton'
 
 interface Benefit {
   icon: string
@@ -66,10 +66,10 @@ const Card: React.FC<CardProps> = ({
           </div>
         </div>
       </div>
-      <div className="flex gap-3 py-6 justify-center">
+      {/* <div className="flex gap-3 py-6 justify-center">
         <SecondaryButton>See the curriculum</SecondaryButton>
         <PrimaryButton>Enroll Now</PrimaryButton>
-      </div>
+      </div> */}
     </>
   )
 }
