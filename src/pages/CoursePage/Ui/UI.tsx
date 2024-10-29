@@ -49,11 +49,16 @@ const UI: React.FC<UiProps> = ({ data }) => {
   const { data: userData } = useQuery({
     queryKey: ['user'],
     queryFn: handleGetUser,
+    retry: 0,
   })
   const user: any = userData
   const useremail: string = user?.email || ''
   const handleEnroll = (courseName: string): void => {
+    useremail? (
     window.location.href = `https://pages.razorpay.com/pl_PCndOh475OhoA1/view?product=${courseName}&email=${useremail}`
+    ): (
+    window.location.href = `https://pages.razorpay.com/pl_PCndOh475OhoA1/view?product=${courseName}`
+    );
   }
   useEffect(() => {
     const fetchCourseData = async (): Promise<void> => {
