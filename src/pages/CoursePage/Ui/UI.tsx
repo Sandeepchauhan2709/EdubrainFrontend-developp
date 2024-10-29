@@ -142,7 +142,13 @@ const UI: React.FC<UiProps> = ({ data }) => {
           </span>
           <div className="flex gap-3 py-6 justify-center">
             <SecondaryButton>See the curriculum</SecondaryButton>
-            <PrimaryButton onClick={() => {handleEnroll(data.title)}}>Enroll Now</PrimaryButton>
+            <PrimaryButton
+              onClick={() => {
+                handleEnroll(data.title)
+              }}
+            >
+              Enroll Now
+            </PrimaryButton>
           </div>
         </div>
       </div>

@@ -30,7 +30,7 @@ const Hero: React.FC<HeroProps> = ({
   const handleEnroll = (courseName: string): void => {
     window.location.href = `https://pages.razorpay.com/pl_PCndOh475OhoA1/view?product=${courseName}&email=${useremail}`
   }
-  
+
   return (
     <div className="flex flex-col text-white pt-[60px] font-bold gap-6">
       <div className="flex justify-center">
@@ -48,8 +48,13 @@ const Hero: React.FC<HeroProps> = ({
       <div className="flex gap-3 py-6 justify-center">
         <SecondaryButton>See the curriculum</SecondaryButton>
         {/* <PrimaryButton>Enroll Now</PrimaryButton> */}
-  <PrimaryButton onClick={() => {handleEnroll(title)}}>Enroll Now</PrimaryButton>
-
+        <PrimaryButton
+          onClick={() => {
+            handleEnroll(title)
+          }}
+        >
+          Enroll Now
+        </PrimaryButton>
       </div>
       <div className="flex justify-center">
         <Video videoSrc={videoSrc} poster={poster} />

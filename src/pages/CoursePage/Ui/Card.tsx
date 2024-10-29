@@ -114,7 +114,13 @@ const BenefitsCard: React.FC<CardProps> = ({ title1 }) => {
       </div>
       <div className="flex gap-3 py-6 justify-center">
         <SecondaryButton>See the curriculum</SecondaryButton>
-        <PrimaryButton onClick={() => {handleEnroll(title1)}}>Enroll Now</PrimaryButton>
+        <PrimaryButton
+          onClick={() => {
+            handleEnroll(title1)
+          }}
+        >
+          Enroll Now
+        </PrimaryButton>
       </div>
     </>
   )
