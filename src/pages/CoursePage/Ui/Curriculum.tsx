@@ -36,9 +36,9 @@ const Playlist: React.FC<{ lecture: Lecture }> = ({ lecture }) => {
               Preview
             </span>
           </div> */}
-          <div className="hidden sm:block">
+          {/* <div className="hidden sm:block">
             <span className="text-white text-xs">9:52</span>
-          </div>
+          </div> */}
         </div>
       </div>
       <hr className="bg-white my-2" />
@@ -118,10 +118,7 @@ const Curriculum: React.FC<CurriculumProps> = ({ sections, courseTitle }) => {
               {sections[activeIndex || 0]?.section_name}
             </h3>
             <p className="text-[#ABAEB2] text-center lg:text-left">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatu
+            Explore the comprehensive learning experience awaiting you on this course detail page. From fundamental concepts to advanced techniques, discover what you will learn and how it will propel your skills to new heights.
             </p>
             <div className="hidden lg:block text-white py-6">
               <ul className="list-disc pl-8 text-xl space-y-4">

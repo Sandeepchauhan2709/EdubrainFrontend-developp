@@ -213,12 +213,13 @@ const VideoSection = (): JSX.Element => {
   useEffect(() => {
     const fetchCourses = async (): Promise<void> => {
       try {
-        const response = await fetch(API.coursedata)
+        const response = await fetch(API.coursedatabyslug(slug))
         if (!response.ok) {
           throw new Error('Failed to fetch courses')
         }
 
         const data = await response.json()
+        console.log(data);
         setCourses(Array.isArray(data) ? data : [data])
       } catch (error) {
         console.error('Error fetching courses:', error)
@@ -495,9 +496,13 @@ const VideoSection = (): JSX.Element => {
         {/* right side content  */}
         <div className="w-full lg:min-w-[420px] lg:max-w-[600px] flex flex-col items-center gap-[20px] mt-12">
           <div className="flex justify-between items-center border border-foreground-light border-opacity-20 dark:opacity-100 dark:border-neutral-90 rounded-[20px] py-5 w-full px-10 h-[162px]">
-            <h2 className="h2 text-foreground-light dark:text-neutral-10">
+            {/* <h2 className="h2 text-foreground-light dark:text-neutral-10">
               Course <br /> Progress
+            </h2> */}
+            <h2 className="h2 text-foreground-light dark:text-neutral-10">
+               {courses[0]?.course_name} <br /> Progress
             </h2>
+
 
             <div
               className="h-[120px] w-[120px] aspect-square rounded-full bg-white dark:bg-background flex items-center justify-center relative dark:"

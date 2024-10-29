@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Video from './Video'
+// import Video from './Video'
 import PrimaryButton from '../../../components/buttons/PrimaryButton'
 import SecondaryButton from '../../../components/buttons/SecondaryButton'
 
@@ -8,7 +8,7 @@ interface HeroProps {
   title: string
   subtitle: string
   subtitle1: string
-  videoSrc: string
+  // videoSrc: string
   poster: string
 }
 
@@ -16,7 +16,7 @@ const Hero: React.FC<HeroProps> = ({
   title,
   subtitle,
   subtitle1,
-  videoSrc,
+  // videoSrc,
   poster,
 }) => {
   return (
@@ -38,8 +38,13 @@ const Hero: React.FC<HeroProps> = ({
         <PrimaryButton>Enroll Now</PrimaryButton>
       </div>
       <div className="flex justify-center">
-        <Video videoSrc={videoSrc} poster={poster} />
-      </div>
+        {/* <Video videoSrc={videoSrc} poster={poster} /> */}
+        <img 
+          src={poster} 
+          alt="Hero Poster" 
+          className="w-[900px] h-[500px] object-cover" 
+        />     
+       </div>
     </div>
   )
 }

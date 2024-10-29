@@ -86,7 +86,6 @@ const BenefitsCard: React.FC<CardProps> = ({ title1 }) => {
                     alt={benefit.title}
                     className="w-12 h-12"
                   />
-                  <img alt={benefit.title} className="w-12 h-12" />
                 </div>
                 <div className="flex justify-center text-white text-[24px]">
                   <span>{benefit.title}</span>

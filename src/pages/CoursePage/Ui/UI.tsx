@@ -80,7 +80,7 @@ const UI: React.FC<UiProps> = ({ data }) => {
         title={data.title}
         subtitle={data.subtitle}
         subtitle1={data.subtitle1}
-        videoSrc=""
+        // videoSrc=""
         poster={data.poster}
       />
       <Card title1={data.Cardtitle} />
