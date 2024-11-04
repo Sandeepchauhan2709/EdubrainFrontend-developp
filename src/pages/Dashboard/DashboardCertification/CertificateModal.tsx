@@ -94,6 +94,7 @@ const CertificateModal: React.FC<CertificateModalProps> = ({ onClose, userName, 
     if (certificateElement) {
       html2canvas(certificateElement).then((canvas) => {
         const imgData = canvas.toDataURL('image/png');
+        // eslint-disable-next-line new-cap
         const pdf = new jsPDF('l', 'mm', 'a4');
         const pdfWidth = pdf.internal.pageSize.getWidth();
         const pdfHeight = pdf.internal.pageSize.getHeight();
