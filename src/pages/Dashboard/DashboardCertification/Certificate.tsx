@@ -110,7 +110,7 @@
 //         />
 //       </div>
 //       {showCertificate && (
-//         <CertificateModal 
+//         <CertificateModal
 //           onClose={() => setShowCertificate(false)}
 //           userName={userName}
 //           courseName={courseName}
@@ -150,15 +150,15 @@
 
 // export default Certification
 
-import React from 'react';
-import { Award, CheckCircle } from 'lucide-react';
+import React from 'react'
+import { Award, CheckCircle } from 'lucide-react'
 
 interface CertificateProps {
-  userName: string;
-  courseName: string;
-  completionDate: string;
-  logoUrl?: string;
-  certificateId?: string;
+  userName: string
+  courseName: string
+  completionDate: string
+  logoUrl?: string
+  certificateId?: string
 }
 
 const Certificate: React.FC<CertificateProps> = ({
@@ -166,13 +166,12 @@ const Certificate: React.FC<CertificateProps> = ({
   courseName,
   completionDate,
   logoUrl,
-  certificateId = 'ABC123'
+  certificateId = 'ABC123',
 }) => {
   return (
     <div className="relative w-full max-w-4xl mx-auto">
       {/* Background with gradient */}
       <div className="bg-gradient-to-br from-white to-blue-50 p-16 border-8 border-double border-blue-600 rounded-lg shadow-2xl">
-        
         {/* Decorative corners */}
         <div className="absolute top-0 left-0 w-24 h-24 border-t-4 border-l-4 border-gold-500 rounded-tl-lg" />
         <div className="absolute top-0 right-0 w-24 h-24 border-t-4 border-r-4 border-gold-500 rounded-tr-lg" />
@@ -187,7 +186,9 @@ const Certificate: React.FC<CertificateProps> = ({
             <Award className="h-20 w-20 text-blue-600" />
           )}
           <div className="text-right">
-            <p className="text-sm text-gray-600">Certificate ID: {certificateId}</p>
+            <p className="text-sm text-gray-600">
+              Certificate ID: {certificateId}
+            </p>
             <p className="text-sm text-gray-600">{new Date().getFullYear()}</p>
           </div>
         </div>
@@ -208,7 +209,9 @@ const Certificate: React.FC<CertificateProps> = ({
 
           {/* Certificate Body */}
           <div className="my-12 space-y-6">
-            <p className="text-lg text-gray-600 italic">This is to certify that</p>
+            <p className="text-lg text-gray-600 italic">
+              This is to certify that
+            </p>
             <h2 className="text-4xl font-serif font-bold text-blue-700 py-4 px-8 inline-block border-b-2 border-blue-200">
               {userName}
             </h2>
@@ -218,21 +221,23 @@ const Certificate: React.FC<CertificateProps> = ({
             <h3 className="text-3xl font-semibold text-blue-600 my-4 px-8">
               {courseName}
             </h3>
-            <p className="text-lg text-gray-600">
-              Awarded on {completionDate}
-            </p>
+            <p className="text-lg text-gray-600">Awarded on {completionDate}</p>
           </div>
 
           {/* Signatures Section */}
           <div className="flex justify-center gap-24 mt-16">
             <div className="text-center">
               <div className="w-48 border-t-2 border-blue-400 pt-2">
-                <p className="font-serif font-semibold text-gray-700">Course Director</p>
+                <p className="font-serif font-semibold text-gray-700">
+                  Course Director
+                </p>
               </div>
             </div>
             <div className="text-center">
               <div className="w-48 border-t-2 border-blue-400 pt-2">
-                <p className="font-serif font-semibold text-gray-700">Academic Dean</p>
+                <p className="font-serif font-semibold text-gray-700">
+                  Academic Dean
+                </p>
               </div>
             </div>
           </div>
@@ -246,12 +251,10 @@ const Certificate: React.FC<CertificateProps> = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Certificate;
-
-
+export default Certificate
 
 // import React from 'react';
 // import { Award, Shield, Star, Trophy, Medal, CheckCircle, BookOpen } from 'lucide-react';
@@ -280,7 +283,7 @@ export default Certificate;
 //         {/* Minimal geometric patterns */}
 //         <div className="absolute top-0 left-0 w-20 h-20 border-t-4 border-l-4 border-gray-800" />
 //         <div className="absolute bottom-0 right-0 w-20 h-20 border-b-4 border-r-4 border-gray-800" />
-        
+
 //         {/* Header */}
 //         <div className="text-center mb-12">
 //           {logoUrl ? (
@@ -290,7 +293,7 @@ export default Certificate;
 //           )}
 //           <h1 className="text-4xl font-light tracking-wide text-gray-800">CERTIFICATE</h1>
 //         </div>
-        
+
 //         {/* Content */}
 //         <div className="text-center space-y-8">
 //           <p className="text-lg text-gray-600">This certifies that</p>
@@ -299,7 +302,7 @@ export default Certificate;
 //           <h3 className="text-2xl font-semibold text-gray-800">{courseName}</h3>
 //           <p className="text-lg text-gray-600">On {completionDate}</p>
 //         </div>
-        
+
 //         {/* Footer */}
 //         <div className="mt-16 flex justify-between items-end">
 //           <p className="text-sm text-gray-500">ID: {certificateId}</p>
@@ -498,9 +501,6 @@ export default Certificate;
 
 // export default Certificates;
 
-
-
-
 // import React from 'react';
 
 // interface CertificateProps {
@@ -522,27 +522,27 @@ export default Certificate;
 
 //       {/* Certificate Title */}
 //       <h1 className="text-5xl font-extrabold text-blue-800 mb-4">Certificate of Completion</h1>
-      
+
 //       {/* Certificate Description */}
 //       <p className="text-lg mb-8 italic">This is to certify that</p>
-      
+
 //       {/* User Name */}
 //       <p className="text-4xl font-bold text-blue-600 mb-8">{userName}</p>
-      
+
 //       {/* Course Completion Details */}
 //       <p className="text-lg mb-8">has successfully completed the course</p>
 //       <p className="text-3xl font-semibold text-blue-600 mb-8">"{courseName}"</p>
-      
+
 //       {/* Completion Date */}
 //       <p className="text-lg mb-8">on {completionDate}</p>
-      
+
 //       {/* Divider */}
 //       <div className="mt-16">
 //         <div className="w-72 mx-auto border-t-2 border-blue-500 pt-4">
 //           <p className="font-bold">Instructor Signature</p>
 //         </div>
 //       </div>
-      
+
 //       {/* Decorative Elements */}
 //       <div className="absolute bottom-8 left-8 text-gray-600">
 //         <p className="text-sm">Course Certification No: ABC123</p>

@@ -1,35 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import image from '../../../assets/images/Frame 664.svg';
-import number1 from '../../../assets/images/Number.png';
-import number2 from '../../../assets/images/Number2.png';
-import number3 from '../../../assets/images/Number3.png';
-import number4 from '../../../assets/images/Number4.png';
-import number5 from '../../../assets/images/Number5.png';
-import Progressbutton from './Progessbutton';
-import FAQs from '../../../components/reusable/FAQs';
-import FAQ from '../../../assets/data/faq';
-import CertificateModal from './CertificateModal';
-import { getAllEnrolledCourses } from '../../../api/enrolledCourses';
-import { type IEnrollmentDetails } from '../../../types/enrollment.types';
-import CertificatePreview from './CertificatePreview';
-import { handleGetUser } from '../../../api/user'; 
+import React, { useState, useEffect } from 'react'
+import image from '../../../assets/images/Frame 664.svg'
+import number1 from '../../../assets/images/Number.png'
+import number2 from '../../../assets/images/Number2.png'
+import number3 from '../../../assets/images/Number3.png'
+import number4 from '../../../assets/images/Number4.png'
+import number5 from '../../../assets/images/Number5.png'
+import Progressbutton from './Progessbutton'
+import FAQs from '../../../components/reusable/FAQs'
+import FAQ from '../../../assets/data/faq'
+import CertificateModal from './CertificateModal'
+import { getAllEnrolledCourses } from '../../../api/enrolledCourses'
+import { type IEnrollmentDetails } from '../../../types/enrollment.types'
+import CertificatePreview from './CertificatePreview'
+import { handleGetUser } from '../../../api/user'
 
 interface CertificationState {
-  courseCompleted: boolean;
-  showCertificate: boolean;
-  userName: string;
-  courseName: string;
-  completionDate: string;
-  overallProgress: number;
-  error: string | null;
-  loading: boolean;
-  enrollmentDetails?: IEnrollmentDetails;
+  courseCompleted: boolean
+  showCertificate: boolean
+  userName: string
+  courseName: string
+  completionDate: string
+  overallProgress: number
+  error: string | null
+  loading: boolean
+  enrollmentDetails?: IEnrollmentDetails
 }
 interface UserData {
-  name: string;
+  name: string
 }
 // const Certification = ():void => {
-  const Certification: React.FC = (): JSX.Element => {
+const Certification: React.FC = (): JSX.Element => {
   const [state, setState] = useState<CertificationState>({
     courseCompleted: false,
     showCertificate: false,
@@ -38,116 +38,144 @@ interface UserData {
     completionDate: '',
     overallProgress: 0,
     error: null,
-    loading: true
-  });
+    loading: true,
+  })
   interface StepProps {
-    index: number;
-    number: number;
-    title: string;
-    description: string;
+    index: number
+    number: number
+    title: string
+    description: string
   }
 
   useEffect(() => {
     const fetchUserData = async (): Promise<void> => {
       try {
-        setState(prev => ({ ...prev, loading: true }));
-        
-        const userData = await handleGetUser() as UserData;
-          setState(prev => ({
+        setState((prev) => ({ ...prev, loading: true }))
+
+        const userData = (await handleGetUser()) as UserData
+        setState((prev) => ({
           ...prev,
           userName: userData?.name || 'John Doe',
-          error: null
-        }));
+          error: null,
+        }))
       } catch (error) {
-        console.error("Error fetching user data:", error);
-        setState(prev => ({
+        console.error('Error fetching user data:', error)
+        setState((prev) => ({
           ...prev,
-          error: 'Failed to fetch user data'
-        }));
+          error: 'Failed to fetch user data',
+        }))
       } finally {
-        setState(prev => ({ ...prev, loading: false }));
+        setState((prev) => ({ ...prev, loading: false }))
       }
-    };
+    }
 
-    const fetchEnrollmentData = async (): Promise<void>  => {
+    const fetchEnrollmentData = async (): Promise<void> => {
       try {
-        setState(prev => ({ ...prev, loading: true }));
-        
-        const enrollmentDetails = await getAllEnrolledCourses();
-        console.log('Enrollment Details:', enrollmentDetails);
-        
+        setState((prev) => ({ ...prev, loading: true }))
+
+        const enrollmentDetails = await getAllEnrolledCourses()
+        console.log('Enrollment Details:', enrollmentDetails)
+
         if (!enrollmentDetails || !enrollmentDetails.length) {
-          throw new Error('No enrolled courses found');
+          throw new Error('No enrolled courses found')
         }
 
-        const latestEnrollment = enrollmentDetails[0];
-        
-        setState(prev => ({
+        const latestEnrollment = enrollmentDetails[0]
+
+        setState((prev) => ({
           ...prev,
           courseName: latestEnrollment.title || '',
-          overallProgress: parseInt(latestEnrollment.overallProgress?.toString() || '0'),
-          courseCompleted: parseInt(latestEnrollment.overallProgress?.toString() || '0') >= 1,
-          completionDate: latestEnrollment.enrollmentDate 
-            ? new Date(latestEnrollment.enrollmentDate).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-              })
+          overallProgress: parseInt(
+            latestEnrollment.overallProgress?.toString() || '0'
+          ),
+          courseCompleted:
+            parseInt(latestEnrollment.overallProgress?.toString() || '0') >= 1,
+          completionDate: latestEnrollment.enrollmentDate
+            ? new Date(latestEnrollment.enrollmentDate).toLocaleDateString(
+                'en-US',
+                {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                }
+              )
             : '',
           enrollmentDetails: latestEnrollment,
-          error: null
-        }));
+          error: null,
+        }))
       } catch (error) {
-        console.error("Error fetching enrollment data:", error);
-        setState(prev => ({
+        console.error('Error fetching enrollment data:', error)
+        setState((prev) => ({
           ...prev,
-          error: error instanceof Error ? error.message : 'Failed to fetch enrollment data'
-        }));
+          error:
+            error instanceof Error
+              ? error.message
+              : 'Failed to fetch enrollment data',
+        }))
       } finally {
-        setState(prev => ({ ...prev, loading: false }));
+        setState((prev) => ({ ...prev, loading: false }))
       }
-    };
+    }
 
-    fetchUserData();
-    fetchEnrollmentData();
-  }, []);
+    fetchUserData()
+    fetchEnrollmentData()
+  }, [])
 
   const steps = [
-    { number: 1, title: 'Enroll in a Course', description: 'Engage in lectures and complete requirements.' },
-    { number: 2, title: 'Complete Course Requirements', description: 'Complete all required lectures and assignments.' },
-    { number: 3, title: 'Submit Assessments', description: 'Submit assessments to complete the course.' },
-    { number: 4, title: 'Achieve Certification Criteria', description: 'Meet all certification requirements.' },
-    { number: 5, title: 'Receive Your Certificate', description: 'Download your certificate upon completion.' },
-  ];
+    {
+      number: 1,
+      title: 'Enroll in a Course',
+      description: 'Engage in lectures and complete requirements.',
+    },
+    {
+      number: 2,
+      title: 'Complete Course Requirements',
+      description: 'Complete all required lectures and assignments.',
+    },
+    {
+      number: 3,
+      title: 'Submit Assessments',
+      description: 'Submit assessments to complete the course.',
+    },
+    {
+      number: 4,
+      title: 'Achieve Certification Criteria',
+      description: 'Meet all certification requirements.',
+    },
+    {
+      number: 5,
+      title: 'Receive Your Certificate',
+      description: 'Download your certificate upon completion.',
+    },
+  ]
 
-  const handleCertificateDownload = ():void => {
+  const handleCertificateDownload = (): void => {
     if (!state.courseCompleted) {
-      alert("Please complete the course before downloading your certificate.");
-      return;
-    }
-    
-    if (!state.userName || !state.courseName || !state.completionDate) {
-      alert("Certificate information is incomplete. Please try again later.");
-      return;
+      alert('Please complete the course before downloading your certificate.')
+      return
     }
 
-    setState(prev => ({ ...prev, showCertificate: true }));
-  };
+    if (!state.userName || !state.courseName || !state.completionDate) {
+      alert('Certificate information is incomplete. Please try again later.')
+      return
+    }
+
+    setState((prev) => ({ ...prev, showCertificate: true }))
+  }
 
   // const Step = ({ index, number, title, description }) => {
-    const Step: React.FC<StepProps> = ({ index, number, title, description }) => {
+  const Step: React.FC<StepProps> = ({ index, number, title, description }) => {
+    const stepImages = [image, number1, number2, number3, number4, number5]
+    const topPosition = index === 0 ? 'top-0' : 'top-[-76px]'
 
-    const stepImages = [image, number1, number2, number3, number4, number5];
-    const topPosition = index === 0 ? 'top-0' : 'top-[-76px]';
-    
     return (
-      <div 
+      <div
         className="relative border dark:border-[#FFFFFF8A] p-2 rounded-xl hover:border-primary transition-colors"
         role="listitem"
       >
-        <img 
-          src={stepImages[number]} 
-          className={`absolute left-[380px] ${topPosition}`} 
+        <img
+          src={stepImages[number]}
+          className={`absolute left-[380px] ${topPosition}`}
           alt={`Step ${number}`}
           loading="lazy"
         />
@@ -160,34 +188,34 @@ interface UserData {
           </p>
         </div>
       </div>
-    );
-  };
+    )
+  }
 
   if (state.error) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg">
-          <p className="text-red-600 dark:text-red-400">
-            {state.error}
-          </p>
-          <button 
-            onClick={() => {window.location.reload()}} 
+          <p className="text-red-600 dark:text-red-400">{state.error}</p>
+          <button
+            onClick={() => {
+              window.location.reload()
+            }}
             className="mt-2 text-sm text-red-600 dark:text-red-400 underline"
           >
             Try Again
           </button>
         </div>
       </div>
-    );
+    )
   }
 
   return (
     <div className="relative flex flex-col lg:flex-row gap-16 py-16 max-w-[1440px] mx-auto px-4">
       {/* Left Column */}
       <div className="flex-1 max-w-[600px]">
-        <img 
-          src={image} 
-          alt="Certificate Process Illustration" 
+        <img
+          src={image}
+          alt="Certificate Process Illustration"
           className="w-full h-auto mb-6"
           loading="lazy"
         />
@@ -198,11 +226,7 @@ interface UserData {
         </div>
         <div className="py-6 flex flex-col gap-8" role="list">
           {steps.map((step, index) => (
-            <Step 
-              key={index} 
-              index={index} 
-              {...step} 
-            />
+            <Step key={index} index={index} {...step} />
           ))}
         </div>
       </div>
@@ -213,7 +237,9 @@ interface UserData {
           {state.loading ? (
             <div className="flex flex-col items-center gap-2">
               <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-              <p className="text-neutral-600 dark:text-neutral-300">Loading certificate preview...</p>
+              <p className="text-neutral-600 dark:text-neutral-300">
+                Loading certificate preview...
+              </p>
             </div>
           ) : (
             <CertificatePreview
@@ -241,19 +267,22 @@ interface UserData {
           <h2 className="text-black dark:text-white text-[36px] font-bold">
             Frequently Asked Questions
           </h2>
-          <FAQs 
-            faqs={FAQ.faqs} 
-            faqButtonProps={{ 
-              className: '!bg-background !border-neutral-95 hover:border-primary transition-colors' 
-            }} 
+          <FAQs
+            faqs={FAQ.faqs}
+            faqButtonProps={{
+              className:
+                '!bg-background !border-neutral-95 hover:border-primary transition-colors',
+            }}
           />
         </div>
       </div>
 
       {/* Certificate Modal */}
       {state.showCertificate && (
-        <CertificateModal 
-          onClose={() => {setState(prev => ({ ...prev, showCertificate: false }))}}
+        <CertificateModal
+          onClose={() => {
+            setState((prev) => ({ ...prev, showCertificate: false }))
+          }}
           userName={state.userName}
           courseName={state.courseName}
           completionDate={state.completionDate}
@@ -261,16 +290,10 @@ interface UserData {
         />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Certification;
-
-
-
-
-
-
+export default Certification
 
 // / import React, { useState, useEffect } from 'react'
 // import image from '../../../assets/images/Frame 664.svg'
@@ -284,7 +307,6 @@ export default Certification;
 // import FAQ from '../../../assets/data/faq'
 // import CertificateModal from './CertificateModal'
 // import API from '../../../api/index'
-
 
 // const Certification: React.FC = () => {
 //   const [courseCompleted, setCourseCompleted] = useState(false);
@@ -341,7 +363,7 @@ export default Certification;
 //   ]
 
 //   const handleCertificateDownload = () => {
-    
+
 //     if (courseCompleted) {
 //       setShowCertificate(true)
 //     } else {
@@ -387,7 +409,7 @@ export default Certification;
 //         />
 //       </div>
 //       {showCertificate && (
-//         <CertificateModal 
+//         <CertificateModal
 //           onClose={() => {setShowCertificate(false)}}
 //           userName={userName}
 //           courseName={courseName}
@@ -427,8 +449,6 @@ export default Certification;
 // }
 
 // export default Certification
-
-
 
 // import React, { useState, useEffect } from 'react'
 // import image from '../../../assets/images/Frame 664.svg'
@@ -540,7 +560,7 @@ export default Certification;
 //         />
 //       </div>
 //       {showCertificate && (
-//         <CertificateModal 
+//         <CertificateModal
 //           onClose={() => {setShowCertificate(false)}}
 //           userName={userName}
 //           courseName={courseName}
@@ -581,9 +601,6 @@ export default Certification;
 // }
 
 // export default Certification
-
-
-
 
 // import React from 'react'
 // import image from '../../../assets/images/Frame 664.svg'

@@ -61,12 +61,12 @@ const Hero: React.FC<HeroProps> = ({
       </div>
       <div className="flex justify-center">
         {/* <Video videoSrc={videoSrc} poster={poster} /> */}
-        <img 
-          src={poster} 
-          alt="Hero Poster" 
-          className="w-[900px] h-[500px] object-cover" 
-        />     
-       </div>
+        <img
+          src={poster}
+          alt="Hero Poster"
+          className="w-[900px] h-[500px] object-cover"
+        />
+      </div>
     </div>
   )
 }

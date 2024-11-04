@@ -220,7 +220,7 @@ const VideoSection = (): JSX.Element => {
         }
 
         const data = await response.json()
-        console.log(data);
+        console.log(data)
         setCourses(Array.isArray(data) ? data : [data])
       } catch (error) {
         console.error('Error fetching courses:', error)
@@ -501,9 +501,8 @@ const VideoSection = (): JSX.Element => {
               Course <br /> Progress
             </h2> */}
             <h2 className="h2 text-foreground-light dark:text-neutral-10">
-               {courses[0]?.course_name} <br /> Progress
+              {courses[0]?.course_name} <br /> Progress
             </h2>
-
 
             <div
               className="h-[120px] w-[120px] aspect-square rounded-full bg-white dark:bg-background flex items-center justify-center relative dark:"

@@ -115,7 +115,10 @@ const Curriculum: React.FC<CurriculumProps> = ({ sections, courseTitle }) => {
               {sections[activeIndex || 0]?.section_name}
             </h3>
             <p className="text-[#ABAEB2] text-center lg:text-left">
-            Explore the comprehensive learning experience awaiting you on this course detail page. From fundamental concepts to advanced techniques, discover what you will learn and how it will propel your skills to new heights.
+              Explore the comprehensive learning experience awaiting you on this
+              course detail page. From fundamental concepts to advanced
+              techniques, discover what you will learn and how it will propel
+              your skills to new heights.
             </p>
             <div className="hidden lg:block text-white py-6">
               <ul className="list-disc pl-8 text-xl space-y-4">

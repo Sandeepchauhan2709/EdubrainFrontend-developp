@@ -7,7 +7,7 @@ const API = {
   // course
   courses: BASE_URL + '/courses',
   coursedata: BASE_URL + '/coursesdata',
-  coursedatabyslug: (slug:any) => `${BASE_URL}/coursesdata/${slug}`, 
+  coursedatabyslug: (slug: any) => `${BASE_URL}/coursesdata/${slug}`,
   courseprogress: BASE_URL + '/progress/',
   enrolledcourses: BASE_URL + '/my-enrollments',
   enroll: BASE_URL + '/enroll/',

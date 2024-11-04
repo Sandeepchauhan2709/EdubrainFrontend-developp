@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import drop from '../../../assets/images/arrow-down.svg';
+import React, { useState } from 'react'
+import drop from '../../../assets/images/arrow-down.svg'
 
 interface ButtonProps {
-  progressText: string;
-  completeText: string;
-  onClick?: () => void; // Make onClick optional
-  disabled: boolean;
+  progressText: string
+  completeText: string
+  onClick?: () => void // Make onClick optional
+  disabled: boolean
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -13,22 +13,22 @@ const Button: React.FC<ButtonProps> = ({
   completeText,
   onClick,
 }): JSX.Element => {
-  const [progress, setProgress] = useState<number>(0);
+  const [progress, setProgress] = useState<number>(0)
 
   const handleButtonClick = (): void => {
-    if (onClick) onClick(); // Call the onClick prop if provided
+    if (onClick) onClick() // Call the onClick prop if provided
     // Simulate progress increase
     const interval = setInterval(() => {
       setProgress((prevProgress) => {
         if (prevProgress < 100) {
-          return prevProgress + 5;
+          return prevProgress + 5
         } else {
-          clearInterval(interval); // Clear interval when reaching 100%
-          return 100;
+          clearInterval(interval) // Clear interval when reaching 100%
+          return 100
         }
-      });
-    }, 500);
-  };
+      })
+    }, 500)
+  }
 
   return (
     <button
@@ -49,13 +49,10 @@ const Button: React.FC<ButtonProps> = ({
         <img src={drop} alt="" />
       </span>
     </button>
-  );
-};
+  )
+}
 
-export default Button;
-
-
-
+export default Button
 
 // import React, { useState } from 'react'
 // import drop from '../../../assets/images/arrow-down.svg'
